@@ -1,0 +1,11 @@
+export * from './access.service';
+import { AccessService } from './access.service';
+export * from './comments.service';
+import { CommentsService } from './comments.service';
+export * from './groupManage.service';
+import { GroupManageService } from './groupManage.service';
+export * from './topic.service';
+import { TopicService } from './topic.service';
+export * from './users.service';
+import { UsersService } from './users.service';
+export const APIS = [AccessService, CommentsService, GroupManageService, TopicService, UsersService];
