@@ -8,6 +8,7 @@ import { CommentsService } from './api/comments.service';
 import { GroupManageService } from './api/groupManage.service';
 import { TopicService } from './api/topic.service';
 import { UsersService } from './api/users.service';
+import { WorkService } from './api/work.service';
 
 @NgModule({
   imports:      [],

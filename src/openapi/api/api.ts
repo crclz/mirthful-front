@@ -8,4 +8,6 @@ export * from './topic.service';
 import { TopicService } from './topic.service';
 export * from './users.service';
 import { UsersService } from './users.service';
-export const APIS = [AccessService, CommentsService, GroupManageService, TopicService, UsersService];
+export * from './work.service';
+import { WorkService } from './work.service';
+export const APIS = [AccessService, CommentsService, GroupManageService, TopicService, UsersService, WorkService];

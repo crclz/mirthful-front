@@ -11,10 +11,10 @@
  */
 
 
-export interface QUser { 
-    id?: string;
-    description?: string | null;
-    nickname?: string | null;
-    avatar?: string | null;
-}
+export type WorkType = 'Book' | 'Film';
+
+export const WorkType = {
+    Book: 'Book' as WorkType,
+    Film: 'Film' as WorkType
+};
 

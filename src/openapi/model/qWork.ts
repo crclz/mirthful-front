@@ -11,10 +11,10 @@
  */
 
 
-export interface QUser { 
+export interface QWork { 
     id?: string;
+    name?: string | null;
+    author?: string | null;
     description?: string | null;
-    nickname?: string | null;
-    avatar?: string | null;
 }
 
