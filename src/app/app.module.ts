@@ -13,12 +13,18 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
+import { RegisterComponent } from './register/register.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyMaterialModule } from '@ngx-formly/material';
+import { leopardMessageOptions } from './valeed';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    CommentComponent
+    CommentComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +36,10 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    MatBadgeModule
+    MatBadgeModule,
+    ReactiveFormsModule,
+    FormlyModule.forRoot({ validationMessages: leopardMessageOptions }),
+    FormlyMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
