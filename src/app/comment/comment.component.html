@@ -1,13 +1,24 @@
+<!-- Comment List -->
 <div *ngFor="let comment of comments$ | async">
     <mat-card style="margin-top: 2em; border-radius:2em;">
         <mat-card-title>{{comment.user.nickname}}</mat-card-title>
-        <mat-card-content>{{comment.text}}</mat-card-content>
+        <mat-card-content>
+            <!-- Rating Stars -->
+            <div>
+                <ng-container *ngFor="let k of genlist(comment.rating)">
+                    <mat-icon color="accent">star</mat-icon>
+                </ng-container>
+            </div>
+            {{comment.text}}
+        </mat-card-content>
         <mat-card-actions>
+
+            <!-- Attitude -->
             <button mat-icon-button>
-                <mat-icon color="accent">thumb_up</mat-icon>
+                <mat-icon>thumb_up</mat-icon>
             </button>
             <span style="padding-right: 2em;">
-                {{comment.agreeCount+1025}}
+                {{comment.agreeCount}}
             </span>
 
             <button mat-icon-button>
@@ -17,3 +28,9 @@
         </mat-card-actions>
     </mat-card>
 </div>
+
+<!-- User leave comment -->
+<form [formGroup]="commentForm" (ngSubmit)="createComment()">
+    <formly-form [form]="commentForm" [fields]="commentFields" [model]="commemtModel"></formly-form>
+    <button mat-raised-button color="accent" type="submit" [disabled]="commentForm.invalid">发送</button>
+</form>
