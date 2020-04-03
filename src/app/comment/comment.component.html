@@ -1,4 +1,7 @@
 <!-- Comment List -->
+
+<button mat-flat-button color="primary" (click)="switchOrderType()" >{{orderType}}</button>
+
 <div *ngFor="let comment of comments$ | async">
     <mat-card style="margin-top: 2em; border-radius:2em;">
         <mat-card-title>{{comment.user.nickname}}</mat-card-title>

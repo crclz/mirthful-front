@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { WorkService, CommentsService, QComment, OrderByType, CreateCommentModel } from 'src/openapi';
 import { ActivatedRoute } from '@angular/router';
-import { map, switchMap, shareReplay, take, filter, tap } from 'rxjs/operators';
-import { Observable, combineLatest } from 'rxjs';
+import { map, switchMap, shareReplay, take, filter, tap, startWith } from 'rxjs/operators';
+import { Observable, combineLatest, Subject, ReplaySubject } from 'rxjs';
 import { QWork } from 'src/openapi/model/qWork';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
@@ -23,6 +23,17 @@ export class CommentComponent implements OnInit {
 
   myAttitude: number = 1;
 
+  order$ = new ReplaySubject<OrderByType>();// remember to initialize
+  orderType = OrderByType.Hottest;
+
+  switchOrderType() {
+    if (this.orderType != OrderByType.Hottest)
+      this.orderType = OrderByType.Hottest;
+    else
+      this.orderType = OrderByType.Newest;
+    this.order$.next(this.orderType);
+  }
+
   constructor(
     private route: ActivatedRoute,
     private commentApi: CommentsService,
@@ -32,12 +43,19 @@ export class CommentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.order$.next(OrderByType.Hottest);
+
     if (this.workId$ == null) {
       this.workId$ = this.route.paramMap.pipe(map(p => p.get('workId')))
     }
 
-    this.comments$ = this.workId$.pipe(
-      switchMap(id => this.commentApi.getByWork(id, OrderByType.Hottest, 0)),
+    // this.comments$ = this.workId$.pipe(
+    //   switchMap(id => this.commentApi.getByWork(id, OrderByType.Hottest, 0)),
+    //   shareReplay(1)
+    // )
+
+    this.comments$ = combineLatest(this.workId$, this.order$).pipe(
+      switchMap(([workId, order]) => this.commentApi.getByWork(workId, order, 0)),
       shareReplay(1)
     )
   }
@@ -110,7 +128,7 @@ export class CommentComponent implements OnInit {
   expressAttitude(comment: QComment, agree: boolean) {
     if (comment.myAttitude == agree)
       agree = null;
-      
+
     this.auth.me$.pipe(
       take(1),
       tap(user => { if (user == null) { this.noti.push('你还未登录') } else { console.log("uuu", user) } }),
