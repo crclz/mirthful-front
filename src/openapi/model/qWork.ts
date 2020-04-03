@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { WorkType } from './workType';
 
 
 export interface QWork { 
@@ -16,5 +17,6 @@ export interface QWork {
     name?: string | null;
     author?: string | null;
     description?: string | null;
+    type?: WorkType;
 }
 
