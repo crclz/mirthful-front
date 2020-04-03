@@ -1,12 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { WorkService, CommentsService, QComment, OrderByType, CreateCommentModel } from 'src/openapi';
 import { ActivatedRoute } from '@angular/router';
-import { map, switchMap, shareReplay } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { map, switchMap, shareReplay, take, filter, tap } from 'rxjs/operators';
+import { Observable, combineLatest } from 'rxjs';
 import { QWork } from 'src/openapi/model/qWork';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { NotificationService } from '../notification.service';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-comment',
@@ -25,7 +26,8 @@ export class CommentComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private commentApi: CommentsService,
-    private noti: NotificationService
+    private noti: NotificationService,
+    public auth: AuthenticationService
   ) {
   }
 
@@ -91,7 +93,6 @@ export class CommentComponent implements OnInit {
   ];
 
   createComment() {
-
     this.workId$.pipe(
       switchMap(workId => this.commentApi.createComment({
         workId: workId,
@@ -104,6 +105,34 @@ export class CommentComponent implements OnInit {
       this.commemtModel.text = '';
       this.noti.ok("评论成功！")
     }, p => this.noti.error(p))
+  }
 
+  expressAttitude(comment: QComment, agree: boolean) {
+    if (comment.myAttitude == agree)
+      agree = null;
+      
+    this.auth.me$.pipe(
+      take(1),
+      tap(user => { if (user == null) { this.noti.push('你还未登录') } else { console.log("uuu", user) } }),
+      filter(user => user != null),
+      switchMap(user => this.commentApi.expressAttitude(comment.id, agree)),
+      take(1)
+    ).subscribe(() => {
+      this.noti.ok("操作成功");
+      let agreeDelta = 0;
+      let disagreeDelta = 0;
+      if (comment.myAttitude == true && agree != true)
+        agreeDelta = -1;
+      if (comment.myAttitude != true && agree == true)
+        agreeDelta = 1;
+      if (comment.myAttitude == false && agree != false)
+        disagreeDelta = -1;
+      if (comment.myAttitude != false && agree == false)
+        disagreeDelta = 1;
+
+      comment.agreeCount += agreeDelta;
+      comment.disagreeCount += disagreeDelta;
+      comment.myAttitude = agree;
+    }, p => this.noti.error(p));
   }
 }

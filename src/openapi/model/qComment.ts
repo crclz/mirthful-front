@@ -24,5 +24,6 @@ export interface QComment {
     agreeCount?: number;
     disagreeCount?: number;
     user?: QUser;
+    myAttitude?: boolean | null;
 }
 

@@ -14,15 +14,15 @@
         <mat-card-actions>
 
             <!-- Attitude -->
-            <button mat-icon-button>
-                <mat-icon>thumb_up</mat-icon>
+            <button mat-icon-button (click)="expressAttitude(comment,true);">
+                <mat-icon [color]="comment.myAttitude==true?'accent':''">thumb_up</mat-icon>
             </button>
             <span style="padding-right: 2em;">
                 {{comment.agreeCount}}
             </span>
 
-            <button mat-icon-button>
-                <mat-icon>thumb_down</mat-icon>
+            <button mat-icon-button (click)="expressAttitude(comment,false)">
+                <mat-icon [color]="comment.myAttitude==false?'accent':''">thumb_down</mat-icon>
             </button>
             {{comment.disagreeCount}}
         </mat-card-actions>
@@ -30,7 +30,9 @@
 </div>
 
 <!-- User leave comment -->
-<form [formGroup]="commentForm" (ngSubmit)="createComment()">
-    <formly-form [form]="commentForm" [fields]="commentFields" [model]="commemtModel"></formly-form>
-    <button mat-raised-button color="accent" type="submit" [disabled]="commentForm.invalid">发送</button>
-</form>
+<div *ngIf="this.auth.me$ | async">
+    <form [formGroup]="commentForm" (ngSubmit)="createComment()">
+        <formly-form [form]="commentForm" [fields]="commentFields" [model]="commemtModel"></formly-form>
+        <button mat-raised-button color="accent" type="submit" [disabled]="commentForm.invalid">发送</button>
+    </form>
+</div>
