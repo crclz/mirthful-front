@@ -5,6 +5,7 @@ import { CommentComponent } from './comment/comment.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { WorkComponent } from './work/work.component';
+import { CreateTopicComponent } from './create-topic/create-topic.component';
 
 
 const routes: Routes = [
@@ -12,7 +13,8 @@ const routes: Routes = [
   { path: 'comment/:workId', component: CommentComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'work/:workId', component: WorkComponent }
+  { path: 'work/:workId', component: WorkComponent },
+  { path: 'create-topic', component: CreateTopicComponent }
 ];
 
 @NgModule({

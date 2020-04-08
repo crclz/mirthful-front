@@ -20,6 +20,7 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
 import { leopardMessageOptions } from './valeed';
 import { LoginComponent } from './login/login.component';
 import { WorkComponent } from './work/work.component';
+import { CreateTopicComponent } from './create-topic/create-topic.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { WorkComponent } from './work/work.component';
     CommentComponent,
     RegisterComponent,
     LoginComponent,
-    WorkComponent
+    WorkComponent,
+    CreateTopicComponent
   ],
   imports: [
     BrowserModule,
