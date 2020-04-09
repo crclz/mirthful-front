@@ -21,6 +21,7 @@ import { leopardMessageOptions } from './valeed';
 import { LoginComponent } from './login/login.component';
 import { WorkComponent } from './work/work.component';
 import { CreateTopicComponent } from './create-topic/create-topic.component';
+import { TopicProfileComponent } from './topic-profile/topic-profile.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { CreateTopicComponent } from './create-topic/create-topic.component';
     RegisterComponent,
     LoginComponent,
     WorkComponent,
-    CreateTopicComponent
+    CreateTopicComponent,
+    TopicProfileComponent
   ],
   imports: [
     BrowserModule,

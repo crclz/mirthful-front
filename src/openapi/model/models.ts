@@ -12,6 +12,7 @@ export * from './qAdminRequest';
 export * from './qComment';
 export * from './qPost';
 export * from './qReply';
+export * from './qTopic';
 export * from './qUser';
 export * from './qWork';
 export * from './registerModel';

@@ -1,0 +1,6 @@
+<div *ngIf="(topic$|async) as topic">
+    <h2> 名称: {{topic.name}} </h2>
+    <h3> 简介：{{topic.description}} </h3>
+    <h3> 成员数量：{{topic.memberCount}} </h3>
+    <h3 *ngIf="topic.relatedWork"> 相关作品：{{topic.relatedWork}} </h3>
+</div>
