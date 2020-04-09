@@ -6,6 +6,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { WorkComponent } from './work/work.component';
 import { CreateTopicComponent } from './create-topic/create-topic.component';
+import { TopicProfileComponent } from './topic-profile/topic-profile.component';
 
 
 const routes: Routes = [
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'work/:workId', component: WorkComponent },
-  { path: 'create-topic', component: CreateTopicComponent }
+  { path: 'create-topic', component: CreateTopicComponent },
+  { path: 'topic-profile/:topicId', component: TopicProfileComponent }
 ];
 
 @NgModule({

@@ -3,4 +3,20 @@
     <h3> 简介：{{topic.description}} </h3>
     <h3> 成员数量：{{topic.memberCount}} </h3>
     <h3 *ngIf="topic.relatedWork"> 相关作品：{{topic.relatedWork}} </h3>
+
+
+    <div *ngIf="(membership$|async) as member">
+        你已经加入
+    </div>
+
+    <!-- Not a member or not logged in -->
+    <div *ngIf="(membership$|async) == null">
+        
+        <!-- Logged in but not a member -->
+        <ng-container *ngIf="(this.auth.me$|async)!=null">
+            <button mat-flat-button color="accent" (click)="joinTopic(topic.id)">加入</button>
+        </ng-container>
+
+    </div>
+
 </div>

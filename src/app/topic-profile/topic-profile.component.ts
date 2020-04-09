@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable } from 'rxjs';
-import { TopicService, QTopic } from 'src/openapi';
+import { Observable, combineLatest, of } from 'rxjs';
+import { TopicService, QTopic, QTopicMember, JoinTopicModel } from 'src/openapi';
 import { NotificationService } from '../notification.service';
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap, shareReplay } from 'rxjs/operators';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-topic-profile',
@@ -17,12 +18,19 @@ export class TopicProfileComponent implements OnInit {
 
   topic$: Observable<QTopic>;
 
+  membership$: Observable<QTopicMember>;
+
   constructor(
     private topicApi: TopicService,
     private noti: NotificationService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public auth: AuthenticationService
   ) {
 
+  }
+
+  get me$() {
+    return this.auth.me$;
   }
 
   ngOnInit(): void {
@@ -34,6 +42,16 @@ export class TopicProfileComponent implements OnInit {
       switchMap(id => this.topicApi.getTopicProfile(id)),
       shareReplay(1)
     );
+
+    this.membership$ = combineLatest(this.auth.me$, this.topicId$).pipe(
+      switchMap(([me, topicId]) => me == null ? of(null) : this.topicApi.getMembership(topicId)),
+      shareReplay(1)
+    );
+  }
+
+  joinTopic(topicId: string) {
+    this.topicApi.joinTopic({ topicId: topicId })
+      .subscribe(p => this.noti.ok("加入成功"), p => this.noti.error(p));
   }
 
 }
