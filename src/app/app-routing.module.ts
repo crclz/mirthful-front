@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { WorkComponent } from './work/work.component';
 import { CreateTopicComponent } from './create-topic/create-topic.component';
 import { TopicProfileComponent } from './topic-profile/topic-profile.component';
+import { TopicComponent } from './topic/topic.component';
 
 
 const routes: Routes = [
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'work/:workId', component: WorkComponent },
   { path: 'create-topic', component: CreateTopicComponent },
-  { path: 'topic-profile/:topicId', component: TopicProfileComponent }
+  { path: 'topic-profile/:topicId', component: TopicProfileComponent },
+  { path: 'topic/:topicId', component: TopicComponent }
 ];
 
 @NgModule({

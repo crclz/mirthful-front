@@ -22,6 +22,9 @@ import { LoginComponent } from './login/login.component';
 import { WorkComponent } from './work/work.component';
 import { CreateTopicComponent } from './create-topic/create-topic.component';
 import { TopicProfileComponent } from './topic-profile/topic-profile.component';
+import { TopicComponent } from './topic/topic.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,8 @@ import { TopicProfileComponent } from './topic-profile/topic-profile.component';
     LoginComponent,
     WorkComponent,
     CreateTopicComponent,
-    TopicProfileComponent
+    TopicProfileComponent,
+    TopicComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +51,9 @@ import { TopicProfileComponent } from './topic-profile/topic-profile.component';
     MatBadgeModule,
     ReactiveFormsModule,
     FormlyModule.forRoot({ validationMessages: leopardMessageOptions }),
-    FormlyMaterialModule
+    FormlyMaterialModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
