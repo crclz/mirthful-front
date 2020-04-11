@@ -1,28 +1,54 @@
 <div *ngFor="let post of posts$|async">
-    <a [routerLink]="['/post-view',post.id]" style="text-decoration: none;">
-        <mat-card style="margin-top: 2em; border-radius:2em;">
-            <mat-card-title>
-                <mat-chip-list>
-                    <mat-chip *ngIf="post.isPinned" color="primary" selected>
-                        <mat-icon>vertical_align_top</mat-icon>
-                        置顶
-                    </mat-chip>
-                    <mat-chip *ngIf="post.isEssense" color="accent" selected>
-                        <mat-icon>stars</mat-icon>
-                        精华
-                    </mat-chip>
-                </mat-chip-list>
+    <mat-card style="margin-top: 2em; border-radius:2em;">
+        <mat-card-title>
+            <mat-chip-list>
+                <mat-chip *ngIf="post.isPinned" color="primary" selected>
+                    <mat-icon>vertical_align_top</mat-icon>
+                    置顶
+                </mat-chip>
+                <mat-chip *ngIf="post.isEssense" color="accent" selected>
+                    <mat-icon>stars</mat-icon>
+                    精华
+                </mat-chip>
+            </mat-chip-list>
 
 
-                {{post.user.nickname}}:
-                {{post.title}}
-            </mat-card-title>
-            <mat-card-content>
+            {{post.user.nickname}}:
+            {{post.title}}
+        </mat-card-title>
+        <mat-card-content>
+            <a [routerLink]="['/post-view',post.id]" style="text-decoration: none;">
+
                 {{post.text}}
-                <!-- <img *ngIf="post.image" [src]="post.image" style="max-width: 600px; max-height: 400px;"> -->
-            </mat-card-content>
-        </mat-card>
-    </a>
+            </a>
+            <!-- <img *ngIf="post.image" [src]="post.image" style="max-width: 600px; max-height: 400px;"> -->
+        </mat-card-content>
+
+        <mat-card-actions>
+
+            <ng-container *ngIf="(member$|async) as member">
+                <ng-container *ngIf="member.role=='Admin'||member.role=='Super'">
+
+                    <button *ngIf="!post.isPinned" mat-flat-button color="primary"
+                        (click)="setPinned(post.id,true)">置顶</button>
+
+                    <button *ngIf="post.isPinned" mat-flat-button color="accent"
+                        (click)="setPinned(post.id,false)">取消置顶</button>
+
+
+                    <button *ngIf="!post.isEssense" mat-flat-button color="primary"
+                        (click)="setEssence(post.id,true)">设为精华</button>
+
+                    <button *ngIf="post.isEssense" mat-flat-button color="primary"
+                        (click)="setEssence(post.id,false)">取消精华</button>
+
+
+                    <button mat-flat-button color="primary" (click)="setRemove(post.id,true)">删帖</button>
+                </ng-container>
+            </ng-container>
+
+        </mat-card-actions>
+    </mat-card>
 </div>
 
 <form [formGroup]="sendPostForm" (submit)="sendPost(sendPostForm.value)">

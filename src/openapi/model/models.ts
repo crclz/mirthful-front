@@ -1,3 +1,4 @@
+export * from './adminAction';
 export * from './createCommentModel';
 export * from './createTopicModel';
 export * from './doAdminModel';

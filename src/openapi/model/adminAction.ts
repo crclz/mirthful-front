@@ -9,12 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AdminAction } from './adminAction';
 
 
-export interface DoAdminModel { 
-    postId?: string | null;
-    action?: AdminAction;
-    status?: boolean;
-}
+export type AdminAction = 'IsPinned' | 'IsEssence' | 'Remove';
+
+export const AdminAction = {
+    IsPinned: 'IsPinned' as AdminAction,
+    IsEssence: 'IsEssence' as AdminAction,
+    Remove: 'Remove' as AdminAction
+};
 
