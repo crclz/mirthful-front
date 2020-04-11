@@ -23,4 +23,16 @@
 
     </div>
 
+    <!-- Requests -->
+    <div *ngIf="(membership$|async) as member">
+        <div *ngIf="member.role=='Super' ">
+            <div *ngFor="let request of requests$|async">
+                用户Id: {{request.user.id}},
+                用户昵称: {{request.user.nickname}}
+                <button mat-raised-button (click)="handleAdminRequest(request.id,true)">同意</button>
+                <button mat-raised-button (click)="handleAdminRequest(request.id,false)">拒绝</button>
+            </div>
+        </div>
+    </div>
+
 </div>

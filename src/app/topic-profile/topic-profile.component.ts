@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable, combineLatest, of } from 'rxjs';
-import { TopicService, QTopic, QTopicMember, JoinTopicModel, GroupManageService } from 'src/openapi';
+import { TopicService, QTopic, QTopicMember, JoinTopicModel, GroupManageService, QAdminRequest } from 'src/openapi';
 import { NotificationService } from '../notification.service';
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap, shareReplay } from 'rxjs/operators';
@@ -19,6 +19,8 @@ export class TopicProfileComponent implements OnInit {
   topic$: Observable<QTopic>;
 
   membership$: Observable<QTopicMember>;
+
+  requests$: Observable<QAdminRequest[]>
 
   constructor(
     private topicApi: TopicService,
@@ -48,6 +50,11 @@ export class TopicProfileComponent implements OnInit {
       switchMap(([me, topicId]) => me == null ? of(null) : this.topicApi.getMembership(topicId)),
       shareReplay(1)
     );
+
+    this.requests$ = this.topicId$.pipe(
+      switchMap(id => this.groupManage.getUnhandledRequests(id, 0, true)),
+      shareReplay(1)
+    );
   }
 
   joinTopic(topicId: string) {
@@ -58,6 +65,11 @@ export class TopicProfileComponent implements OnInit {
   sendBeAdminRequest(topicId: string) {
     this.groupManage.sendAdminRequest({ topicId: topicId, text: 'No content.' })
       .subscribe(() => this.noti.ok("申请成功，等待处理。"), p => this.noti.error(p));
+  }
+
+  handleAdminRequest(requestId: string, accept: boolean) {
+    this.groupManage.handleRequest({ requestId: requestId, accept: accept })
+      .subscribe(() => this.noti.ok("操作成功"), p => this.noti.error(p));
   }
 
 }
