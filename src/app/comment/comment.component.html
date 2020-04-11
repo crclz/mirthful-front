@@ -28,6 +28,11 @@
                 <mat-icon [color]="comment.myAttitude==false?'accent':''">thumb_down</mat-icon>
             </button>
             {{comment.disagreeCount}}
+
+            <!-- Report -->
+            <button mat-icon-button (click)="openReportDialog(comment.id)">
+                <mat-icon color="primary">report</mat-icon>
+            </button>
         </mat-card-actions>
     </mat-card>
 </div>

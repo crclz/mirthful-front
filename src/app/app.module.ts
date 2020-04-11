@@ -28,6 +28,8 @@ import { MatInputModule } from '@angular/material/input';
 import { GroupComponent } from './group/group.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { PostViewComponent } from './post-view/post-view.component';
+import { ReportDialogComponent } from './report-dialog/report-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import { PostViewComponent } from './post-view/post-view.component';
     TopicProfileComponent,
     TopicComponent,
     GroupComponent,
-    PostViewComponent
+    PostViewComponent,
+    ReportDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,8 @@ import { PostViewComponent } from './post-view/post-view.component';
     FormlyMaterialModule,
     MatFormFieldModule,
     MatInputModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

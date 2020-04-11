@@ -2,12 +2,14 @@ import { Component, OnInit, Input } from '@angular/core';
 import { WorkService, CommentsService, QComment, OrderByType, CreateCommentModel } from 'src/openapi';
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap, shareReplay, take, filter, tap, startWith } from 'rxjs/operators';
-import { Observable, combineLatest, Subject, ReplaySubject } from 'rxjs';
+import { Observable, combineLatest, Subject, ReplaySubject, of } from 'rxjs';
 import { QWork } from 'src/openapi/model/qWork';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { NotificationService } from '../notification.service';
 import { AuthenticationService } from '../authentication.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
 
 @Component({
   selector: 'app-comment',
@@ -38,7 +40,8 @@ export class CommentComponent implements OnInit {
     private route: ActivatedRoute,
     private commentApi: CommentsService,
     private noti: NotificationService,
-    public auth: AuthenticationService
+    public auth: AuthenticationService,
+    public dialog: MatDialog
   ) {
   }
 
@@ -152,5 +155,12 @@ export class CommentComponent implements OnInit {
       comment.disagreeCount += disagreeDelta;
       comment.myAttitude = agree;
     }, p => this.noti.error(p));
+  }
+
+  openReportDialog(commentId: string) {
+    const dialogRef = this.dialog.open(ReportDialogComponent, {
+      width: '300px',
+      data: { commentId$: of(commentId) }
+    });
   }
 }

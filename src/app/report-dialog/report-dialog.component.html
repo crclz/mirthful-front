@@ -1,0 +1,4 @@
+<form [formGroup]="reportForm" (ngSubmit)="submitReport()">
+    <formly-form [form]="reportForm" [fields]="fields" [model]="model"></formly-form>
+    <button mat-raised-button color="accent" type="submit" [disabled]="reportForm.invalid">发送举报</button>
+</form>
