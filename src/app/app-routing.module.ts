@@ -8,6 +8,7 @@ import { WorkComponent } from './work/work.component';
 import { CreateTopicComponent } from './create-topic/create-topic.component';
 import { TopicProfileComponent } from './topic-profile/topic-profile.component';
 import { TopicComponent } from './topic/topic.component';
+import { GroupComponent } from './group/group.component';
 
 
 const routes: Routes = [
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'work/:workId', component: WorkComponent },
   { path: 'create-topic', component: CreateTopicComponent },
   { path: 'topic-profile/:topicId', component: TopicProfileComponent },
-  { path: 'topic/:topicId', component: TopicComponent }
+  { path: 'topic/:topicId', component: TopicComponent },
+  { path: 'group/:topicId', component: GroupComponent }
 ];
 
 @NgModule({

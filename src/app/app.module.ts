@@ -25,6 +25,8 @@ import { TopicProfileComponent } from './topic-profile/topic-profile.component';
 import { TopicComponent } from './topic/topic.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { GroupComponent } from './group/group.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import { MatInputModule } from '@angular/material/input';
     WorkComponent,
     CreateTopicComponent,
     TopicProfileComponent,
-    TopicComponent
+    TopicComponent,
+    GroupComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +56,8 @@ import { MatInputModule } from '@angular/material/input';
     FormlyModule.forRoot({ validationMessages: leopardMessageOptions }),
     FormlyMaterialModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

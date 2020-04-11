@@ -23,5 +23,7 @@ export interface QPost {
     isPinned?: boolean;
     isEssense?: boolean;
     user?: QUser;
+    replyCount?: number;
+    lastReply?: number;
 }
 

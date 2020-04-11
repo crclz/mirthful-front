@@ -312,14 +312,13 @@ export class TopicService {
     /**
      * @param topicId 
      * @param page 
-     * @param newest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getPosts(topicId?: string, page?: number, newest?: boolean, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<Array<QPost>>;
-    public getPosts(topicId?: string, page?: number, newest?: boolean, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<HttpResponse<Array<QPost>>>;
-    public getPosts(topicId?: string, page?: number, newest?: boolean, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<HttpEvent<Array<QPost>>>;
-    public getPosts(topicId?: string, page?: number, newest?: boolean, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<any> {
+    public getPosts(topicId?: string, page?: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<Array<QPost>>;
+    public getPosts(topicId?: string, page?: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<HttpResponse<Array<QPost>>>;
+    public getPosts(topicId?: string, page?: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<HttpEvent<Array<QPost>>>;
+    public getPosts(topicId?: string, page?: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (topicId !== undefined && topicId !== null) {
@@ -329,10 +328,6 @@ export class TopicService {
         if (page !== undefined && page !== null) {
           queryParameters = this.addToHttpParams(queryParameters,
             <any>page, 'page');
-        }
-        if (newest !== undefined && newest !== null) {
-          queryParameters = this.addToHttpParams(queryParameters,
-            <any>newest, 'newest');
         }
 
         let headers = this.defaultHeaders;

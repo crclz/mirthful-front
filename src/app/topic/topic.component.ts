@@ -37,7 +37,7 @@ export class TopicComponent implements OnInit {
     }
 
     this.posts$ = this.topicId$.pipe(
-      switchMap(id => this.topicApi.getPosts(id, 0, true))
+      switchMap(id => this.topicApi.getPosts(id, 0))
     );
 
     this.postForm = this.fb.group({
@@ -61,6 +61,8 @@ export class TopicComponent implements OnInit {
       take(1),
       switchMap(topicId => this.topicApi.sendPost(topicId, null, this.postForm.value.text, this.image))
     ).subscribe(() => this.noti.ok("发送成功"), p => this.noti.error(p));
+
+    this.postForm.reset();
   }
 
 }
