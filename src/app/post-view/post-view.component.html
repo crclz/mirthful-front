@@ -1,0 +1,46 @@
+<div *ngIf="(post$|async) as post">
+    <mat-card style="margin-top: 2em; border-radius:2em;">
+        <mat-card-title>
+            <mat-chip-list>
+                <mat-chip *ngIf="post.isPinned" color="primary" selected>
+                    <mat-icon>vertical_align_top</mat-icon>
+                    置顶
+                </mat-chip>
+                <mat-chip *ngIf="post.isEssense" color="accent" selected>
+                    <mat-icon>stars</mat-icon>
+                    精华
+                </mat-chip>
+            </mat-chip-list>
+
+
+            {{post.user.nickname}}:
+            {{post.title}}
+        </mat-card-title>
+        <mat-card-content>
+            {{post.text}}
+            <!-- <img *ngIf="post.image" [src]="post.image" style="max-width: 600px; max-height: 400px;"> -->
+        </mat-card-content>
+    </mat-card>
+
+</div>
+
+
+<mat-card *ngFor="let reply of replies$|async" style="margin-top: 2em; border-radius:2em; background-color: skyblue;">
+    <mat-card-title>
+        {{reply.user.nickname}}
+    </mat-card-title>
+    <mat-card-content>
+        {{reply.text}}
+        <!-- <img *ngIf="post.image" [src]="post.image" style="max-width: 600px; max-height: 400px;"> -->
+    </mat-card-content>
+</mat-card>
+
+<form [formGroup]="replyFrom" (submit)="sendReply(replyFrom.value)">
+
+    <mat-form-field>
+        <input matInput placeholder="文字" formControlName="text" required>
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" [disabled]="replyFrom.invalid">回复</button>
+
+</form>

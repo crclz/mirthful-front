@@ -9,6 +9,7 @@ import { CreateTopicComponent } from './create-topic/create-topic.component';
 import { TopicProfileComponent } from './topic-profile/topic-profile.component';
 import { TopicComponent } from './topic/topic.component';
 import { GroupComponent } from './group/group.component';
+import { PostViewComponent } from './post-view/post-view.component';
 
 
 const routes: Routes = [
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'create-topic', component: CreateTopicComponent },
   { path: 'topic-profile/:topicId', component: TopicProfileComponent },
   { path: 'topic/:topicId', component: TopicComponent },
-  { path: 'group/:topicId', component: GroupComponent }
+  { path: 'group/:topicId', component: GroupComponent },
+  { path: 'post-view/:postId', component: PostViewComponent }
 ];
 
 @NgModule({

@@ -1,26 +1,28 @@
 <div *ngFor="let post of posts$|async">
-    <mat-card style="margin-top: 2em; border-radius:2em;">
-        <mat-card-title>
-            <mat-chip-list>
-                <mat-chip *ngIf="post.isPinned" color="primary" selected>
-                    <mat-icon>vertical_align_top</mat-icon>
-                    置顶
-                </mat-chip>
-                <mat-chip *ngIf="post.isEssense" color="accent" selected>
-                    <mat-icon>stars</mat-icon>
-                    精华
-                </mat-chip>
-            </mat-chip-list>
+    <a [routerLink]="['/post-view',post.id]" style="text-decoration: none;">
+        <mat-card style="margin-top: 2em; border-radius:2em;">
+            <mat-card-title>
+                <mat-chip-list>
+                    <mat-chip *ngIf="post.isPinned" color="primary" selected>
+                        <mat-icon>vertical_align_top</mat-icon>
+                        置顶
+                    </mat-chip>
+                    <mat-chip *ngIf="post.isEssense" color="accent" selected>
+                        <mat-icon>stars</mat-icon>
+                        精华
+                    </mat-chip>
+                </mat-chip-list>
 
 
-            {{post.user.nickname}}:
-            {{post.title}}
-        </mat-card-title>
-        <mat-card-content>
-            {{post.text}}
-            <img *ngIf="post.image" [src]="post.image" style="max-width: 600px; max-height: 400px;">
-        </mat-card-content>
-    </mat-card>
+                {{post.user.nickname}}:
+                {{post.title}}
+            </mat-card-title>
+            <mat-card-content>
+                {{post.text}}
+                <!-- <img *ngIf="post.image" [src]="post.image" style="max-width: 600px; max-height: 400px;"> -->
+            </mat-card-content>
+        </mat-card>
+    </a>
 </div>
 
 <form [formGroup]="sendPostForm" (submit)="sendPost(sendPostForm.value)">

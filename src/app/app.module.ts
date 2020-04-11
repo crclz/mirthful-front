@@ -27,6 +27,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { GroupComponent } from './group/group.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { PostViewComponent } from './post-view/post-view.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { MatChipsModule } from '@angular/material/chips';
     CreateTopicComponent,
     TopicProfileComponent,
     TopicComponent,
-    GroupComponent
+    GroupComponent,
+    PostViewComponent
   ],
   imports: [
     BrowserModule,
