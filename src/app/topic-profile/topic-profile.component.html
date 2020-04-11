@@ -6,12 +6,16 @@
 
 
     <div *ngIf="(membership$|async) as member">
-        你已经加入
+        你是成员。
+
+        <div *ngIf="member.role=='Normal' && topic.isGroup">
+            <button mat-raised-button (click)="sendBeAdminRequest(topic.id)">成为小组管理员</button>
+        </div>
     </div>
 
     <!-- Not a member or not logged in -->
     <div *ngIf="(membership$|async) == null">
-        
+
         <!-- Logged in but not a member -->
         <ng-container *ngIf="(this.auth.me$|async)!=null">
             <button mat-flat-button color="accent" (click)="joinTopic(topic.id)">加入</button>

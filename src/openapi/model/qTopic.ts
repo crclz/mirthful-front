@@ -13,6 +13,7 @@
 
 export interface QTopic { 
     id?: string;
+    isGroup?: boolean;
     name?: string | null;
     description?: string | null;
     relatedWork?: string | null;

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable, combineLatest, of } from 'rxjs';
-import { TopicService, QTopic, QTopicMember, JoinTopicModel } from 'src/openapi';
+import { TopicService, QTopic, QTopicMember, JoinTopicModel, GroupManageService } from 'src/openapi';
 import { NotificationService } from '../notification.service';
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap, shareReplay } from 'rxjs/operators';
@@ -24,7 +24,8 @@ export class TopicProfileComponent implements OnInit {
     private topicApi: TopicService,
     private noti: NotificationService,
     private route: ActivatedRoute,
-    public auth: AuthenticationService
+    public auth: AuthenticationService,
+    public groupManage: GroupManageService
   ) {
 
   }
@@ -52,6 +53,11 @@ export class TopicProfileComponent implements OnInit {
   joinTopic(topicId: string) {
     this.topicApi.joinTopic({ topicId: topicId })
       .subscribe(p => this.noti.ok("加入成功"), p => this.noti.error(p));
+  }
+
+  sendBeAdminRequest(topicId: string) {
+    this.groupManage.sendAdminRequest({ topicId: topicId, text: 'No content.' })
+      .subscribe(() => this.noti.ok("申请成功，等待处理。"), p => this.noti.error(p));
   }
 
 }
