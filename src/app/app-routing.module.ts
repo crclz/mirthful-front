@@ -7,7 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { WorkComponent } from './work/work.component';
 import { CreateTopicComponent } from './create-topic/create-topic.component';
 import { TopicProfileComponent } from './topic-profile/topic-profile.component';
-import { TopicComponent } from './topic/topic.component';
+import { DiscussionComponent } from './discussion/discussion.component';
 import { GroupComponent } from './group/group.component';
 import { PostViewComponent } from './post-view/post-view.component';
 
@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'work/:workId', component: WorkComponent },
   { path: 'create-topic', component: CreateTopicComponent },
   { path: 'topic-profile/:topicId', component: TopicProfileComponent },
-  { path: 'topic/:topicId', component: TopicComponent },
+  { path: 'discuss/:topicId', component: DiscussionComponent },
   { path: 'group/:topicId', component: GroupComponent },
   { path: 'post-view/:postId', component: PostViewComponent }
 ];

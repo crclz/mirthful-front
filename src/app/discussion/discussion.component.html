@@ -1,0 +1,25 @@
+<div *ngFor="let discussion of discussions$|async">
+    <mat-card style="margin-top: 2em; border-radius:2em;">
+        <mat-card-title>
+            {{discussion.user.nickname}}
+        </mat-card-title>
+        <mat-card-content>
+            {{discussion.text}}
+            <img *ngIf="discussion.imageUrl" [src]="discussion.imageUrl" style="max-width: 600px; max-height: 400px;">
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<form [formGroup]="discussForm">
+
+    <div style="display: flex; flex-direction: column;">
+        <mat-form-field>
+            <textarea matInput placeholder="请输入文字" formControlName="text" required></textarea>
+        </mat-form-field>
+    </div>
+
+    <input type="file" accept="image/*" (change)="onFileChange($event)">
+
+    <button mat-flat-button color="primary" (click)="sendPost(discussForm.value)">发送</button>
+
+</form>

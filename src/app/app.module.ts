@@ -22,7 +22,7 @@ import { LoginComponent } from './login/login.component';
 import { WorkComponent } from './work/work.component';
 import { CreateTopicComponent } from './create-topic/create-topic.component';
 import { TopicProfileComponent } from './topic-profile/topic-profile.component';
-import { TopicComponent } from './topic/topic.component';
+import { DiscussionComponent } from './discussion/discussion.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { GroupComponent } from './group/group.component';
@@ -41,7 +41,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     WorkComponent,
     CreateTopicComponent,
     TopicProfileComponent,
-    TopicComponent,
+    DiscussionComponent,
     GroupComponent,
     PostViewComponent,
     ReportDialogComponent

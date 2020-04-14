@@ -12,11 +12,6 @@
 
 
 export interface InlineObject { 
-    ContentType?: string | null;
-    ContentDisposition?: string | null;
-    Headers?: { [key: string]: Array<string>; } | null;
-    Length?: number;
-    Name?: string | null;
-    FileName?: string | null;
+    File: Blob;
 }
 

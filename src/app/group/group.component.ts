@@ -51,7 +51,7 @@ export class GroupComponent implements OnInit {
   sendPost(data) {
     this.topicId$.pipe(
       take(1),
-      switchMap(id => this.topicApi.sendPost(id, data.title, data.text, null))
+      switchMap(id => this.topicApi.sendPost({ topicId: id, title: data.title, text: data.text }))
     ).subscribe(() => this.noti.ok("发帖成功"), p => this.noti.error(p))
   }
 

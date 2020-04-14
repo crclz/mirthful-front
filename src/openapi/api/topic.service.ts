@@ -738,18 +738,17 @@ export class TopicService {
     }
 
     /**
-     * @param contentType 
-     * @param contentDisposition 
-     * @param length 
-     * @param name 
-     * @param fileName 
+     * @param file 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public uploadFile(contentType?: string, contentDisposition?: string, length?: number, name?: string, fileName?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<UploadFileResponse>;
-    public uploadFile(contentType?: string, contentDisposition?: string, length?: number, name?: string, fileName?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<HttpResponse<UploadFileResponse>>;
-    public uploadFile(contentType?: string, contentDisposition?: string, length?: number, name?: string, fileName?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<HttpEvent<UploadFileResponse>>;
-    public uploadFile(contentType?: string, contentDisposition?: string, length?: number, name?: string, fileName?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<any> {
+    public uploadFile(file: Blob, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<UploadFileResponse>;
+    public uploadFile(file: Blob, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<HttpResponse<UploadFileResponse>>;
+    public uploadFile(file: Blob, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<HttpEvent<UploadFileResponse>>;
+    public uploadFile(file: Blob, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<any> {
+        if (file === null || file === undefined) {
+            throw new Error('Required parameter file was null or undefined when calling uploadFile.');
+        }
 
         let headers = this.defaultHeaders;
 
@@ -777,26 +776,17 @@ export class TopicService {
         let formParams: { append(param: string, value: any): any; };
         let useForm = false;
         let convertFormParamsToString = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
+        useForm = canConsumeForm;
         if (useForm) {
             formParams = new FormData();
         } else {
             formParams = new HttpParams({encoder: this.encoder});
         }
 
-        if (contentType !== undefined) {
-            formParams = formParams.append('ContentType', <any>contentType) as any || formParams;
-        }
-        if (contentDisposition !== undefined) {
-            formParams = formParams.append('ContentDisposition', <any>contentDisposition) as any || formParams;
-        }
-        if (length !== undefined) {
-            formParams = formParams.append('Length', <any>length) as any || formParams;
-        }
-        if (name !== undefined) {
-            formParams = formParams.append('Name', <any>name) as any || formParams;
-        }
-        if (fileName !== undefined) {
-            formParams = formParams.append('FileName', <any>fileName) as any || formParams;
+        if (file !== undefined) {
+            formParams = formParams.append('File', <any>file) as any || formParams;
         }
 
         let responseType: 'text' | 'json' = 'json';
