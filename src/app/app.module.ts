@@ -14,7 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { RegisterComponent } from './register/register.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { leopardMessageOptions } from './valeed';
@@ -30,6 +30,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { PostViewComponent } from './post-view/post-view.component';
 import { ReportDialogComponent } from './report-dialog/report-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { DiscussionHomeComponent } from './discussion-home/discussion-home.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     DiscussionComponent,
     GroupComponent,
     PostViewComponent,
-    ReportDialogComponent
+    ReportDialogComponent,
+    DiscussionHomeComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +65,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatFormFieldModule,
     MatInputModule,
     MatChipsModule,
-    MatDialogModule
+    MatDialogModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

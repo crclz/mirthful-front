@@ -10,6 +10,7 @@ import { TopicProfileComponent } from './topic-profile/topic-profile.component';
 import { DiscussionComponent } from './discussion/discussion.component';
 import { GroupComponent } from './group/group.component';
 import { PostViewComponent } from './post-view/post-view.component';
+import { DiscussionHomeComponent } from './discussion-home/discussion-home.component';
 
 
 const routes: Routes = [
@@ -22,7 +23,8 @@ const routes: Routes = [
   { path: 'topic-profile/:topicId', component: TopicProfileComponent },
   { path: 'discuss/:topicId', component: DiscussionComponent },
   { path: 'group/:topicId', component: GroupComponent },
-  { path: 'post-view/:postId', component: PostViewComponent }
+  { path: 'post-view/:postId', component: PostViewComponent },
+  { path: 'discuss-home', component: DiscussionHomeComponent }
 ];
 
 @NgModule({
