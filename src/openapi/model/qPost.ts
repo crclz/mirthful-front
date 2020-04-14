@@ -17,7 +17,6 @@ export interface QPost {
     createdAt?: number;
     updatedAt?: number;
     senderId?: string;
-    image?: string | null;
     title?: string | null;
     text?: string | null;
     isPinned?: boolean;

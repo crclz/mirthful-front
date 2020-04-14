@@ -21,11 +21,15 @@ import { CreateTopicModel } from '../model/models';
 import { DoAdminModel } from '../model/models';
 import { IdResponse } from '../model/models';
 import { JoinTopicModel } from '../model/models';
+import { QDiscussion } from '../model/models';
 import { QPost } from '../model/models';
 import { QReply } from '../model/models';
 import { QTopic } from '../model/models';
 import { QTopicMember } from '../model/models';
+import { SendDiscussionModel } from '../model/models';
+import { SendPostModel } from '../model/models';
 import { SendReplyModel } from '../model/models';
+import { UploadFileResponse } from '../model/models';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -200,6 +204,61 @@ export class TopicService {
         return this.httpClient.post<any>(`${this.configuration.basePath}/api/topic/do-admin`,
             doAdminModel,
             {
+                responseType: <any>responseType,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param topicId 
+     * @param page 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getDiscussions(topicId?: string, page?: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<Array<QDiscussion>>;
+    public getDiscussions(topicId?: string, page?: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<HttpResponse<Array<QDiscussion>>>;
+    public getDiscussions(topicId?: string, page?: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<HttpEvent<Array<QDiscussion>>>;
+    public getDiscussions(topicId?: string, page?: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<any> {
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (topicId !== undefined && topicId !== null) {
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>topicId, 'topicId');
+        }
+        if (page !== undefined && page !== null) {
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>page, 'page');
+        }
+
+        let headers = this.defaultHeaders;
+
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'text/plain',
+                'application/json',
+                'text/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
+        return this.httpClient.get<Array<QDiscussion>>(`${this.configuration.basePath}/api/topic/get-discussions`,
+            {
+                params: queryParameters,
                 responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -520,20 +579,14 @@ export class TopicService {
     }
 
     /**
-     * @param topicId 
-     * @param title 
-     * @param text 
-     * @param image 
+     * @param sendDiscussionModel 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public sendPost(topicId: string, title?: string, text?: string, image?: Blob, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<IdResponse>;
-    public sendPost(topicId: string, title?: string, text?: string, image?: Blob, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<HttpResponse<IdResponse>>;
-    public sendPost(topicId: string, title?: string, text?: string, image?: Blob, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<HttpEvent<IdResponse>>;
-    public sendPost(topicId: string, title?: string, text?: string, image?: Blob, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<any> {
-        if (topicId === null || topicId === undefined) {
-            throw new Error('Required parameter topicId was null or undefined when calling sendPost.');
-        }
+    public sendDiscussion(sendDiscussionModel?: SendDiscussionModel, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<IdResponse>;
+    public sendDiscussion(sendDiscussionModel?: SendDiscussionModel, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<HttpResponse<IdResponse>>;
+    public sendDiscussion(sendDiscussionModel?: SendDiscussionModel, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<HttpEvent<IdResponse>>;
+    public sendDiscussion(sendDiscussionModel?: SendDiscussionModel, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -551,36 +604,67 @@ export class TopicService {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
+
         // to determine the Content-Type header
         const consumes: string[] = [
-            'multipart/form-data'
+            'application/json'
         ];
-
-        const canConsumeForm = this.canConsumeForm(consumes);
-
-        let formParams: { append(param: string, value: any): any; };
-        let useForm = false;
-        let convertFormParamsToString = false;
-        // use FormData to transmit files using content-type "multipart/form-data"
-        // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
-        useForm = canConsumeForm;
-        if (useForm) {
-            formParams = new FormData();
-        } else {
-            formParams = new HttpParams({encoder: this.encoder});
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        if (topicId !== undefined) {
-            formParams = formParams.append('TopicId', <any>topicId) as any || formParams;
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
         }
-        if (title !== undefined) {
-            formParams = formParams.append('Title', <any>title) as any || formParams;
+
+        return this.httpClient.post<IdResponse>(`${this.configuration.basePath}/api/topic/send-discussion`,
+            sendDiscussionModel,
+            {
+                responseType: <any>responseType,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param sendPostModel 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public sendPost(sendPostModel?: SendPostModel, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<IdResponse>;
+    public sendPost(sendPostModel?: SendPostModel, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<HttpResponse<IdResponse>>;
+    public sendPost(sendPostModel?: SendPostModel, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<HttpEvent<IdResponse>>;
+    public sendPost(sendPostModel?: SendPostModel, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'text/plain',
+                'application/json',
+                'text/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         }
-        if (text !== undefined) {
-            formParams = formParams.append('Text', <any>text) as any || formParams;
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
-        if (image !== undefined) {
-            formParams = formParams.append('Image', <any>image) as any || formParams;
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
         let responseType: 'text' | 'json' = 'json';
@@ -589,7 +673,7 @@ export class TopicService {
         }
 
         return this.httpClient.post<IdResponse>(`${this.configuration.basePath}/api/topic/send-post`,
-            convertFormParamsToString ? formParams.toString() : formParams,
+            sendPostModel,
             {
                 responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
@@ -643,6 +727,85 @@ export class TopicService {
 
         return this.httpClient.post<IdResponse>(`${this.configuration.basePath}/api/topic/send-reply`,
             sendReplyModel,
+            {
+                responseType: <any>responseType,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param contentType 
+     * @param contentDisposition 
+     * @param length 
+     * @param name 
+     * @param fileName 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public uploadFile(contentType?: string, contentDisposition?: string, length?: number, name?: string, fileName?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<UploadFileResponse>;
+    public uploadFile(contentType?: string, contentDisposition?: string, length?: number, name?: string, fileName?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<HttpResponse<UploadFileResponse>>;
+    public uploadFile(contentType?: string, contentDisposition?: string, length?: number, name?: string, fileName?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<HttpEvent<UploadFileResponse>>;
+    public uploadFile(contentType?: string, contentDisposition?: string, length?: number, name?: string, fileName?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'text/plain',
+                'application/json',
+                'text/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'multipart/form-data'
+        ];
+
+        const canConsumeForm = this.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any; };
+        let useForm = false;
+        let convertFormParamsToString = false;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new HttpParams({encoder: this.encoder});
+        }
+
+        if (contentType !== undefined) {
+            formParams = formParams.append('ContentType', <any>contentType) as any || formParams;
+        }
+        if (contentDisposition !== undefined) {
+            formParams = formParams.append('ContentDisposition', <any>contentDisposition) as any || formParams;
+        }
+        if (length !== undefined) {
+            formParams = formParams.append('Length', <any>length) as any || formParams;
+        }
+        if (name !== undefined) {
+            formParams = formParams.append('Name', <any>name) as any || formParams;
+        }
+        if (fileName !== undefined) {
+            formParams = formParams.append('FileName', <any>fileName) as any || formParams;
+        }
+
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
+        return this.httpClient.post<UploadFileResponse>(`${this.configuration.basePath}/api/topic/upload-file`,
+            convertFormParamsToString ? formParams.toString() : formParams,
             {
                 responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,

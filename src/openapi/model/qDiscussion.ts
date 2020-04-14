@@ -9,14 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { QUser } from './qUser';
 
 
-export interface InlineObject { 
-    ContentType?: string | null;
-    ContentDisposition?: string | null;
-    Headers?: { [key: string]: Array<string>; } | null;
-    Length?: number;
-    Name?: string | null;
-    FileName?: string | null;
+export interface QDiscussion { 
+    topicId?: string;
+    senderId?: string;
+    text?: string | null;
+    imageUrl?: string | null;
+    user?: QUser;
 }
 

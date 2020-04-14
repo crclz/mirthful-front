@@ -139,13 +139,14 @@ export class WorkService {
     /**
      * @param type 
      * @param keyword 
+     * @param page 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getWorkByKeyword(type?: WorkType, keyword?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<Array<QWork>>;
-    public getWorkByKeyword(type?: WorkType, keyword?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<HttpResponse<Array<QWork>>>;
-    public getWorkByKeyword(type?: WorkType, keyword?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<HttpEvent<Array<QWork>>>;
-    public getWorkByKeyword(type?: WorkType, keyword?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<any> {
+    public getWorkByKeyword(type?: WorkType, keyword?: string, page?: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<Array<QWork>>;
+    public getWorkByKeyword(type?: WorkType, keyword?: string, page?: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<HttpResponse<Array<QWork>>>;
+    public getWorkByKeyword(type?: WorkType, keyword?: string, page?: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<HttpEvent<Array<QWork>>>;
+    public getWorkByKeyword(type?: WorkType, keyword?: string, page?: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json'}): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (type !== undefined && type !== null) {
@@ -155,6 +156,10 @@ export class WorkService {
         if (keyword !== undefined && keyword !== null) {
           queryParameters = this.addToHttpParams(queryParameters,
             <any>keyword, 'keyword');
+        }
+        if (page !== undefined && page !== null) {
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>page, 'page');
         }
 
         let headers = this.defaultHeaders;
