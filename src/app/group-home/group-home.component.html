@@ -1,0 +1,44 @@
+<mat-form-field>
+    <input matInput placeholder="关键词" [(ngModel)]="wordModel">
+</mat-form-field>
+
+<button mat-raised-button color="accent" (click)="search(wordModel)">搜索</button>
+
+<h2>话题</h2>
+<div *ngFor="let topic of topics$|async">
+    <mat-card style="margin-top: 2em; border-radius:2em;">
+        <mat-card-title>
+            {{topic.name}}
+        </mat-card-title>
+        <mat-card-content>
+            {{topic.description}}
+        </mat-card-content>
+    </mat-card>
+</div>
+
+
+<h2>帖子</h2>
+<div *ngFor="let post of posts$|async">
+    <mat-card style="margin-top: 2em; border-radius:2em;">
+        <mat-card-title>
+            {{post.user.nickname}}:
+            {{post.title}}
+        </mat-card-title>
+        <mat-card-content>
+            {{post.text}}
+        </mat-card-content>
+    </mat-card>
+</div>
+
+reply
+<h2>回复</h2>
+<div *ngFor="let reply of replies$|async">
+    <mat-card style="margin-top: 2em; border-radius:2em;">
+        <mat-card-title>
+            {{reply.user.nickname}}
+        </mat-card-title>
+        <mat-card-content>
+            {{reply.text}}
+        </mat-card-content>
+    </mat-card>
+</div>

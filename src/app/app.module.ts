@@ -31,6 +31,7 @@ import { PostViewComponent } from './post-view/post-view.component';
 import { ReportDialogComponent } from './report-dialog/report-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DiscussionHomeComponent } from './discussion-home/discussion-home.component';
+import { GroupHomeComponent } from './group-home/group-home.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { DiscussionHomeComponent } from './discussion-home/discussion-home.compo
     GroupComponent,
     PostViewComponent,
     ReportDialogComponent,
-    DiscussionHomeComponent
+    DiscussionHomeComponent,
+    GroupHomeComponent
   ],
   imports: [
     BrowserModule,

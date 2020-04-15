@@ -11,6 +11,7 @@ import { DiscussionComponent } from './discussion/discussion.component';
 import { GroupComponent } from './group/group.component';
 import { PostViewComponent } from './post-view/post-view.component';
 import { DiscussionHomeComponent } from './discussion-home/discussion-home.component';
+import { GroupHomeComponent } from './group-home/group-home.component';
 
 
 const routes: Routes = [
@@ -24,7 +25,8 @@ const routes: Routes = [
   { path: 'discuss/:topicId', component: DiscussionComponent },
   { path: 'group/:topicId', component: GroupComponent },
   { path: 'post-view/:postId', component: PostViewComponent },
-  { path: 'discuss-home', component: DiscussionHomeComponent }
+  { path: 'discuss-home', component: DiscussionHomeComponent },
+  { path: 'group-home', component: GroupHomeComponent }
 ];
 
 @NgModule({
