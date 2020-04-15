@@ -29,10 +29,11 @@ export class DiscussionHomeComponent implements OnInit {
       shareReplay(1)
     )
 
-    // this.topics$=this.keyword$.pipe(
-    //   filter(kw => kw != null && kw.trim() != ''),
-    //   switchMap(word=>this.topicApi.get)
-    // )
+    this.topics$ = this.keyword$.pipe(
+      filter(kw => kw != null && kw.trim() != ''),
+      switchMap(word => this.topicApi.searchTopics(word, false, 0)),
+      shareReplay(1)
+    )
   }
 
   search(keyWord: string) {
