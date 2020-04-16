@@ -32,6 +32,7 @@ import { ReportDialogComponent } from './report-dialog/report-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DiscussionHomeComponent } from './discussion-home/discussion-home.component';
 import { GroupHomeComponent } from './group-home/group-home.component';
+import { BASE_PATH } from 'src/openapi';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,7 @@ import { GroupHomeComponent } from './group-home/group-home.component';
     MatDialogModule,
     FormsModule
   ],
-  providers: [],
+  providers: [{ provide: BASE_PATH, useValue: '' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
