@@ -5,16 +5,7 @@
 <button mat-raised-button color="accent" (click)="search(wordModel)">搜索</button>
 
 <h2>话题</h2>
-<div *ngFor="let topic of topics$|async">
-    <mat-card style="margin-top: 2em; border-radius:2em;">
-        <mat-card-title>
-            {{topic.name}}
-        </mat-card-title>
-        <mat-card-content>
-            {{topic.description}}
-        </mat-card-content>
-    </mat-card>
-</div>
+<app-topic-list [topics]="topics$|async"></app-topic-list>
 
 
 <h2>话题内容</h2>
