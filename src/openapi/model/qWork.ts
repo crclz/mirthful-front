@@ -14,8 +14,17 @@ import { WorkType } from './workType';
 
 export interface QWork { 
     id?: string;
+    /**
+     * 作品名称
+     */
     name?: string | null;
+    /**
+     * 作者
+     */
     author?: string | null;
+    /**
+     * 描述
+     */
     description?: string | null;
     type?: WorkType;
 }

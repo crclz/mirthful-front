@@ -89,7 +89,8 @@ export class GroupManageService {
     }
 
     /**
-     * @param id 
+     * 根据某一个管理员请求。
+     * @param id 请求id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -139,9 +140,10 @@ export class GroupManageService {
     }
 
     /**
-     * @param topicId 
-     * @param page 
-     * @param newest 
+     * 获取某小组未处理的请求
+     * @param topicId 小组id
+     * @param page 页码，从0开始。
+     * @param newest true：最新（时间倒序）；false：最旧（时间正序）
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -199,6 +201,7 @@ export class GroupManageService {
     }
 
     /**
+     * （超级管理员）处理请求
      * @param handleRequestModel 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -249,6 +252,7 @@ export class GroupManageService {
     }
 
     /**
+     * 发送请求，希望成为管理员。注意，只有小组有管理员。
      * @param sendAdminRequestModel 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.

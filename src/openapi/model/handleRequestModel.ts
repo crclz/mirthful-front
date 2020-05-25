@@ -12,7 +12,13 @@
 
 
 export interface HandleRequestModel { 
+    /**
+     * 请求id
+     */
     requestId: string;
+    /**
+     * 是否接受
+     */
     accept: boolean;
 }
 

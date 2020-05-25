@@ -111,6 +111,7 @@ export class TopicService {
     }
 
     /**
+     * 创建话题/小组。
      * @param createTopicModel 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -164,6 +165,7 @@ export class TopicService {
     }
 
     /**
+     * 管理帖子
      * @param doAdminModel 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -214,8 +216,9 @@ export class TopicService {
     }
 
     /**
-     * @param topicId 
-     * @param page 
+     * 获取话题的讨论
+     * @param topicId 话题id
+     * @param page 页码。start from 0
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -269,6 +272,7 @@ export class TopicService {
     }
 
     /**
+     * 获取当前登录用户和话题/小组的成员关系实体。  不是成员：返回null。  如果是话题成员，那么请忽略Role，因为Role只对小组有用。
      * @param topicId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -319,7 +323,8 @@ export class TopicService {
     }
 
     /**
-     * @param id 
+     * 根据id获取帖子
+     * @param id 帖子id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -369,8 +374,9 @@ export class TopicService {
     }
 
     /**
-     * @param topicId 
-     * @param page 
+     * 获取小组的帖子
+     * @param topicId 小组id
+     * @param page 页码。从0开始。
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -424,8 +430,9 @@ export class TopicService {
     }
 
     /**
-     * @param postId 
-     * @param page 
+     * 获取某帖子的回帖
+     * @param postId 帖子id
+     * @param page 页码
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -479,6 +486,7 @@ export class TopicService {
     }
 
     /**
+     * 获取话题/小组的基本信息
      * @param topicId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -529,6 +537,7 @@ export class TopicService {
     }
 
     /**
+     * 加入话题/小组。
      * @param joinTopicModel 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -579,8 +588,9 @@ export class TopicService {
     }
 
     /**
-     * @param word 
-     * @param page 
+     * 搜索话题中的讨论
+     * @param word 关键词
+     * @param page 页码。start from 0
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -634,8 +644,9 @@ export class TopicService {
     }
 
     /**
-     * @param word 
-     * @param page 
+     * 搜索帖子
+     * @param word 关键词
+     * @param page 页码。从0开始。
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -689,8 +700,9 @@ export class TopicService {
     }
 
     /**
-     * @param word 
-     * @param page 
+     * 搜索回帖
+     * @param word 关键词
+     * @param page 页码，从0开始。
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -744,9 +756,10 @@ export class TopicService {
     }
 
     /**
-     * @param word 
-     * @param isGroup 
-     * @param page 
+     * 搜索话题/小组
+     * @param word 关键词
+     * @param isGroup 是否是小组
+     * @param page 页码。start from 0
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -804,6 +817,7 @@ export class TopicService {
     }
 
     /**
+     * 在话题内发送讨论
      * @param sendDiscussionModel 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -857,6 +871,7 @@ export class TopicService {
     }
 
     /**
+     * 在小组内发送帖子
      * @param sendPostModel 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -910,6 +925,7 @@ export class TopicService {
     }
 
     /**
+     * 回帖
      * @param sendReplyModel 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -963,6 +979,7 @@ export class TopicService {
     }
 
     /**
+     * 上传文件。  这是一个通用的上传文件的接口。  限制大小：5mb。
      * @param file 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.

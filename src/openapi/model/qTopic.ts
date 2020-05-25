@@ -17,6 +17,9 @@ export interface QTopic {
     name?: string | null;
     description?: string | null;
     relatedWork?: string | null;
+    /**
+     * 成员数量
+     */
     memberCount?: number;
 }
 

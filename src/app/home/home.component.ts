@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '../notification.service';
+import { Subject, Observable } from 'rxjs';
+import { QWork, QTopic, QPost, QDiscussion, WorkService, WorkType, TopicService } from 'src/openapi';
+import { shareReplay, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -8,11 +11,53 @@ import { NotificationService } from '../notification.service';
 })
 export class HomeComponent implements OnInit {
 
+  keyword$ = new Subject<string>();
+
+  books$: Observable<QWork[]>;
+  films$: Observable<QWork[]>;
+
+  groups$: Observable<QTopic[]>;
+  topics$: Observable<QTopic[]>;
+
+  posts$: Observable<QPost[]>;
+  discussions$: Observable<QDiscussion[]>;
+
   constructor(
-    public notification: NotificationService
+    public notification: NotificationService,
+    private workApi: WorkService,
+    private topicApi: TopicService
   ) { }
 
   ngOnInit(): void {
+    this.books$ = this.keyword$.pipe(
+      switchMap(word => this.workApi.getWorkByKeyword(WorkType.Book, word, 0)),
+      shareReplay(1)
+    );
+
+    this.films$ = this.keyword$.pipe(
+      switchMap(word => this.workApi.getWorkByKeyword(WorkType.Film, word, 0)),
+      shareReplay(1)
+    );
+
+    this.groups$ = this.keyword$.pipe(
+      switchMap(word => this.topicApi.searchTopics(word, true, 0)),
+      shareReplay(1)
+    );
+
+    this.topics$ = this.keyword$.pipe(
+      switchMap(word => this.topicApi.searchTopics(word, false, 0)),
+      shareReplay(1)
+    );
+
+    this.posts$ = this.keyword$.pipe(
+      switchMap(word => this.topicApi.searchPosts(word, 0)),
+      shareReplay(1)
+    );
+
+    this.discussions$ = this.keyword$.pipe(
+      switchMap(word => this.topicApi.searchDiscussions(word, 0)),
+      shareReplay(1)
+    );
   }
 
 }

@@ -13,8 +13,14 @@ import { AdminAction } from './adminAction';
 
 
 export interface DoAdminModel { 
+    /**
+     * 帖子id
+     */
     postId?: string | null;
     action?: AdminAction;
+    /**
+     * 状态值。例如Action=IsPinned, Status=false，就意味着对帖子【取消精华】。
+     */
     status?: boolean;
 }
 

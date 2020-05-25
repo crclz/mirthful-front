@@ -12,9 +12,21 @@
 
 
 export interface CreateTopicModel { 
+    /**
+     * true：小组；false：话题
+     */
     isGroup: boolean;
+    /**
+     * 名称
+     */
     name: string;
+    /**
+     * 简介
+     */
     description: string;
+    /**
+     * 关联的作品。如果无关联的作品，则为null。
+     */
     relatedWork?: string | null;
 }
 

@@ -13,8 +13,17 @@
 
 export interface QUser { 
     id?: string;
+    /**
+     * 简介
+     */
     description?: string | null;
+    /**
+     * 昵称
+     */
     nickname?: string | null;
+    /**
+     * 头像图片url
+     */
     avatar?: string | null;
 }
 

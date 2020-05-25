@@ -90,6 +90,7 @@ export class CommentsService {
     }
 
     /**
+     * 对作品发送评论
      * @param createCommentModel 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -143,8 +144,9 @@ export class CommentsService {
     }
 
     /**
-     * @param commentId 
-     * @param agree 
+     * 设置态度状态。
+     * @param commentId 评论id
+     * @param agree 是否点赞。true/false/null
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -196,7 +198,8 @@ export class CommentsService {
     }
 
     /**
-     * @param id 
+     * 查询评论
+     * @param id 评论Id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -246,9 +249,10 @@ export class CommentsService {
     }
 
     /**
-     * @param workId 
-     * @param order 
-     * @param page 
+     * 获取作品的评论列表
+     * @param workId 作品id
+     * @param order 如何排序
+     * @param page 页码。从0开始。
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -306,6 +310,7 @@ export class CommentsService {
     }
 
     /**
+     * 举报评论
      * @param reportModel 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.

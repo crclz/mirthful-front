@@ -12,9 +12,21 @@
 
 
 export interface CreateCommentModel { 
+    /**
+     * 作品Id
+     */
     workId: string;
+    /**
+     * 评论的标题
+     */
     title: string;
+    /**
+     * 评论的正文
+     */
     text: string;
+    /**
+     * 打分
+     */
     rating: number;
 }
 

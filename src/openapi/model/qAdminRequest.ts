@@ -15,8 +15,17 @@ import { RequestStatus } from './requestStatus';
 
 export interface QAdminRequest { 
     id?: string;
+    /**
+     * 小组id
+     */
     topicId?: string;
+    /**
+     * 发送者id
+     */
     senderId?: string;
+    /**
+     * 原因
+     */
     text?: string | null;
     status?: RequestStatus;
     user?: QUser;

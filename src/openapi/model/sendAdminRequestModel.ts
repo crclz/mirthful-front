@@ -12,6 +12,9 @@
 
 
 export interface SendAdminRequestModel { 
+    /**
+     * 小组id
+     */
     topicId: string;
     text: string;
 }

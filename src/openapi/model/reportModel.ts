@@ -12,8 +12,17 @@
 
 
 export interface ReportModel { 
+    /**
+     * 评论id
+     */
     commentId: string;
+    /**
+     * 标题
+     */
     title: string;
+    /**
+     * 举报理由
+     */
     text: string;
 }
 

@@ -19,10 +19,22 @@ export interface QPost {
     senderId?: string;
     title?: string | null;
     text?: string | null;
+    /**
+     * 是否是置顶帖
+     */
     isPinned?: boolean;
+    /**
+     * 是否是精华帖
+     */
     isEssense?: boolean;
     user?: QUser;
+    /**
+     * 回帖数量
+     */
     replyCount?: number;
+    /**
+     * 最新回帖时间
+     */
     lastReply?: number;
 }
 

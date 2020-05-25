@@ -87,7 +87,8 @@ export class WorkService {
     }
 
     /**
-     * @param id 
+     * 根据id获取作品。
+     * @param id 作品id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -137,9 +138,10 @@ export class WorkService {
     }
 
     /**
-     * @param type 
-     * @param keyword 
-     * @param page 
+     * 搜索作品
+     * @param type 作品类型
+     * @param keyword 关键词
+     * @param page 页码。从0开始。
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */

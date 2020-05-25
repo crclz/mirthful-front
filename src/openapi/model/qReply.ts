@@ -15,7 +15,13 @@ import { QUser } from './qUser';
 export interface QReply { 
     id?: string;
     senderId?: string;
+    /**
+     * 帖子id
+     */
     postId?: string;
+    /**
+     * 文字
+     */
     text?: string | null;
     user?: QUser;
 }

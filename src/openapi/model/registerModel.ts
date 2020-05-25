@@ -12,9 +12,21 @@
 
 
 export interface RegisterModel { 
+    /**
+     * 用户名。仅仅用于登录
+     */
     username: string;
+    /**
+     * 密码
+     */
     password: string;
+    /**
+     * 昵称，用于展示。
+     */
     nickname: string;
+    /**
+     * 简介
+     */
     description: string;
 }
 

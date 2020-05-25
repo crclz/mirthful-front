@@ -12,8 +12,17 @@
 
 
 export interface SendPostModel { 
+    /**
+     * 小组id
+     */
     topicId: string;
+    /**
+     * 标题
+     */
     title?: string | null;
+    /**
+     * 正文
+     */
     text?: string | null;
 }
 
