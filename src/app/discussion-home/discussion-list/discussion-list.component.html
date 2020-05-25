@@ -1,0 +1,11 @@
+<div *ngFor="let discussion of discussions">
+    <mat-card style="margin-top: 2em; border-radius:2em;">
+        <mat-card-title>
+            {{discussion.user.nickname}}
+        </mat-card-title>
+        <mat-card-content>
+            {{discussion.text}}
+            <img *ngIf="discussion.imageUrl" [src]="discussion.imageUrl" style="max-width: 600px; max-height: 400px;">
+        </mat-card-content>
+    </mat-card>
+</div>

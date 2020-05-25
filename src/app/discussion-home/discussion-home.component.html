@@ -9,15 +9,4 @@
 
 
 <h2>话题内容</h2>
-
-<div *ngFor="let discussion of discussions$|async">
-    <mat-card style="margin-top: 2em; border-radius:2em;">
-        <mat-card-title>
-            {{discussion.user.nickname}}
-        </mat-card-title>
-        <mat-card-content>
-            {{discussion.text}}
-            <img *ngIf="discussion.imageUrl" [src]="discussion.imageUrl" style="max-width: 600px; max-height: 400px;">
-        </mat-card-content>
-    </mat-card>
-</div>
+<app-discussion-list [discussions]="discussions$|async"></app-discussion-list>

@@ -37,6 +37,7 @@ import { PostListComponent } from './group-home/post-list/post-list.component';
 import { TopicListComponent } from './topic-list/topic-list.component';
 import { WorkHomeComponent } from './work-home/work-home.component';
 import { WorkListComponent } from './work-home/work-list/work-list.component';
+import { DiscussionListComponent } from './discussion-home/discussion-list/discussion-list.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { WorkListComponent } from './work-home/work-list/work-list.component';
     PostListComponent,
     TopicListComponent,
     WorkHomeComponent,
-    WorkListComponent
+    WorkListComponent,
+    DiscussionListComponent
   ],
   imports: [
     BrowserModule,
