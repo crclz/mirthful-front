@@ -12,10 +12,18 @@
 <h2>影视</h2>
 <app-work-list [works]="films$|async"></app-work-list>
 
+<hr>
+
 <h2>话题</h2>
 <app-topic-list [topics]="topics$|async"></app-topic-list>
+
+<h2>话题讨论</h2>
+<app-discussion-list [discussions]="discussions$|async"></app-discussion-list>
+
+<hr>
 
 <h2>小组</h2>
 <app-topic-list [topics]="groups$|async"></app-topic-list>
 
-<!-- TODO: discussions & posts -->
+<h2>小组帖子</h2>
+<app-post-list [posts]="posts$|async"></app-post-list>
