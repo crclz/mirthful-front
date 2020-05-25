@@ -35,6 +35,8 @@ import { GroupHomeComponent } from './group-home/group-home.component';
 import { BASE_PATH } from 'src/openapi';
 import { PostListComponent } from './group-home/post-list/post-list.component';
 import { TopicListComponent } from './topic-list/topic-list.component';
+import { WorkHomeComponent } from './work-home/work-home.component';
+import { WorkListComponent } from './work-home/work-list/work-list.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { TopicListComponent } from './topic-list/topic-list.component';
     DiscussionHomeComponent,
     GroupHomeComponent,
     PostListComponent,
-    TopicListComponent
+    TopicListComponent,
+    WorkHomeComponent,
+    WorkListComponent
   ],
   imports: [
     BrowserModule,
