@@ -11,6 +11,7 @@ import { shareReplay, switchMap } from 'rxjs/operators';
 })
 export class HomeComponent implements OnInit {
 
+  wordInput = '';
   keyword$ = new Subject<string>();
 
   books$: Observable<QWork[]>;
@@ -58,6 +59,13 @@ export class HomeComponent implements OnInit {
       switchMap(word => this.topicApi.searchDiscussions(word, 0)),
       shareReplay(1)
     );
+  }
+
+  goSearch(word: string) {
+    word = word.trim();
+    if (word != '') {
+      this.keyword$.next(word);
+    }
   }
 
 }

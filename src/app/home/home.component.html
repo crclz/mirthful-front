@@ -1,1 +1,15 @@
-<p>home works!</p>
+<h1>Home</h1>
+
+<mat-form-field>
+    <input matInput placeholder="关键词" [(ngModel)]="wordInput">
+</mat-form-field>
+
+<button mat-raised-button color="accent" (click)="goSearch(wordInput)">搜索</button>
+
+
+<h2>话题讨论</h2>
+<app-topic-list [topics]="topics$|async"></app-topic-list>
+
+<h2>小组</h2>
+<app-topic-list [topics]="groups$|async"></app-topic-list>
+
