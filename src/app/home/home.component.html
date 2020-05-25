@@ -6,10 +6,16 @@
 
 <button mat-raised-button color="accent" (click)="goSearch(wordInput)">搜索</button>
 
+<h2>书籍</h2>
+<app-work-list [works]="books$|async"></app-work-list>
 
-<h2>话题讨论</h2>
+<h2>影视</h2>
+<app-work-list [works]="films$|async"></app-work-list>
+
+<h2>话题</h2>
 <app-topic-list [topics]="topics$|async"></app-topic-list>
 
 <h2>小组</h2>
 <app-topic-list [topics]="groups$|async"></app-topic-list>
 
+<!-- TODO: discussions & posts -->
