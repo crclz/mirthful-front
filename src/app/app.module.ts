@@ -33,6 +33,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DiscussionHomeComponent } from './discussion-home/discussion-home.component';
 import { GroupHomeComponent } from './group-home/group-home.component';
 import { BASE_PATH } from 'src/openapi';
+import { PostListComponent } from './group-home/post-list/post-list.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { BASE_PATH } from 'src/openapi';
     PostViewComponent,
     ReportDialogComponent,
     DiscussionHomeComponent,
-    GroupHomeComponent
+    GroupHomeComponent,
+    PostListComponent
   ],
   imports: [
     BrowserModule,
