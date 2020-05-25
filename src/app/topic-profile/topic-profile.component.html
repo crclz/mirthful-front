@@ -1,9 +1,18 @@
 <div *ngIf="(topic$|async) as topic">
-    <h2> 名称: {{topic.name}} </h2>
-    <h3> 简介：{{topic.description}} </h3>
-    <h3> 成员数量：{{topic.memberCount}} </h3>
+    <h1> {{topic.name}} </h1>
+    <h2> {{topic.description}} </h2>
+    <h3 style="display: flex">
+        <mat-icon>person</mat-icon> {{topic.memberCount}}
+    </h3>
     <h3 *ngIf="topic.relatedWork"> 相关作品：{{topic.relatedWork}} </h3>
 
+    <div *ngIf="(membership$|async) as member">
+        <p> <button mat-raised-button>是成员</button> </p>
+    </div>
+
+    <div *ngIf="(membership$|async)==null">
+        <button mat-raised-button>加入</button>
+    </div>
 
     <div *ngIf="(membership$|async) as member">
         你是成员。
