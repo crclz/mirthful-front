@@ -1,1 +1,12 @@
-<p>work-home works!</p>
+<h1> {{workType$|async}} </h1>
+
+<mat-form-field>
+    <input matInput placeholder="关键词" [(ngModel)]="wordInput">
+</mat-form-field>
+
+<button mat-raised-button color="accent" (click)="goSearch(wordInput)">搜索</button>
+
+<h2>搜索结果</h2>
+<app-work-list [works]="works$|async">
+
+</app-work-list>

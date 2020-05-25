@@ -1,1 +1,10 @@
-<p>work-list works!</p>
+<div *ngFor="let work of works">
+    <mat-card style="margin-top: 2em; border-radius:2em;">
+        <mat-card-title>
+            {{work.name}} ( {{work.type}} ) ({{work.author}})
+        </mat-card-title>
+        <mat-card-content>
+            {{work.description}}
+        </mat-card-content>
+    </mat-card>
+</div>

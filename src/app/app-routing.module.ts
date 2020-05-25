@@ -13,6 +13,7 @@ import { GroupComponent } from './group/group.component';
 import { PostViewComponent } from './post-view/post-view.component';
 import { DiscussionHomeComponent } from './discussion-home/discussion-home.component';
 import { GroupHomeComponent } from './group-home/group-home.component';
+import { WorkHomeComponent } from './work-home/work-home.component';
 
 
 const routes: Routes = [
@@ -27,7 +28,8 @@ const routes: Routes = [
   { path: 'group/:topicId', component: GroupComponent },
   { path: 'post-view/:postId', component: PostViewComponent },
   { path: 'discuss-home', component: DiscussionHomeComponent },
-  { path: 'group-home', component: GroupHomeComponent }
+  { path: 'group-home', component: GroupHomeComponent },
+  { path: 'work-home', component: WorkHomeComponent }
 ];
 
 @NgModule({
