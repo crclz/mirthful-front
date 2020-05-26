@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import { QUser } from './qUser';
+import { QWork } from './qWork';
 
 
 export interface QComment { 
@@ -49,5 +50,6 @@ export interface QComment {
      * 我的态度。true/false/null对应点赞/点踩/无
      */
     myAttitude?: boolean | null;
+    work?: QWork;
 }
 
