@@ -58,12 +58,12 @@
 </mat-tab-group>
 
 
-<mat-divider></mat-divider>
+<mat-divider style="margin:3em 0 3em"></mat-divider>
 
 
 <!-- 搜索功能======================= -->
 
-<h1 style="margin-top: 3em;">搜索</h1>
+<h1>搜索</h1>
 
 <mat-form-field>
     <input matInput placeholder="关键词" [(ngModel)]="wordInput">
@@ -71,24 +71,33 @@
 
 <button mat-raised-button color="accent" (click)="goSearch(wordInput)">搜索</button>
 
-<h2>书籍</h2>
-<app-work-list [works]="books$|async"></app-work-list>
+<h2>搜索结果</h2>
 
-<h2>影视</h2>
-<app-work-list [works]="films$|async"></app-work-list>
+<mat-tab-group mat-align-tabs="center">
 
-<hr>
+    <mat-tab label="书籍">
+        <app-work-list [works]="books$|async"></app-work-list>
+    </mat-tab>
 
-<h2>话题</h2>
-<app-topic-list [topics]="topics$|async"></app-topic-list>
+    <mat-tab label="影视">
+        <app-work-list [works]="films$|async"></app-work-list>
+    </mat-tab>
 
-<h2>话题讨论</h2>
-<app-discussion-list [discussions]="discussions$|async"></app-discussion-list>
 
-<hr>
+    <mat-tab label="话题">
+        <app-topic-list [topics]="topics$|async"></app-topic-list>
+    </mat-tab>
 
-<h2>小组</h2>
-<app-topic-list [topics]="groups$|async"></app-topic-list>
+    <mat-tab label="话题讨论">
+        <app-discussion-list [discussions]="discussions$|async"></app-discussion-list>
+    </mat-tab>
 
-<h2>小组帖子</h2>
-<app-post-list [posts]="posts$|async"></app-post-list>
+
+    <mat-tab label="小组">
+        <app-topic-list [topics]="groups$|async"></app-topic-list>
+    </mat-tab>
+
+    <mat-tab label="小组帖子">
+        <app-post-list [posts]="posts$|async"></app-post-list>
+    </mat-tab>
+</mat-tab-group>
