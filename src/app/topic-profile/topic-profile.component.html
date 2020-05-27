@@ -6,21 +6,7 @@
     </h3>
     <h3 *ngIf="topic.relatedWork"> 相关作品：{{topic.relatedWork}} </h3>
 
-    <div *ngIf="(membership$|async) as member">
-        <p> <button mat-raised-button>是成员</button> </p>
-    </div>
 
-    <div *ngIf="(membership$|async)==null">
-        <button mat-raised-button>加入</button>
-    </div>
-
-    <div *ngIf="(membership$|async) as member">
-        你是成员。
-
-        <div *ngIf="member.role=='Normal' && topic.isGroup">
-            <button mat-raised-button (click)="sendBeAdminRequest(topic.id)">成为小组管理员</button>
-        </div>
-    </div>
 
     <!-- Not a member or not logged in -->
     <div *ngIf="(membership$|async) == null">
@@ -31,6 +17,10 @@
         </ng-container>
 
     </div>
+
+    <ng-container *ngIf="(membership$|async)!=null">
+        <h2>你已经是成员✔</h2>
+    </ng-container>
 
     <!-- Requests -->
     <div *ngIf="(membership$|async) as member">

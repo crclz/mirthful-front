@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'work/:workId', component: WorkComponent },
-  { path: 'create-topic', component: CreateTopicComponent },
+  { path: 'create-topic', component: CreateTopicComponent },// ok
   { path: 'topic-profile/:topicId', component: TopicProfileComponent },
   { path: 'discuss/:topicId', component: DiscussionComponent },
   { path: 'group/:topicId', component: GroupComponent },
