@@ -29,7 +29,10 @@ export class LoginComponent implements OnInit {
       templateOptions: {
         label: '用户名',
         maxLength: 32,
-        required: true
+        required: true,
+        attributes: {
+          autocomplete: 'off'
+        }
       }
     }, {
       key: 'password',
