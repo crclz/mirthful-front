@@ -22,9 +22,9 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'work/:workId', component: WorkComponent },
-  { path: 'create-topic', component: CreateTopicComponent },// ok
+  { path: 'create-topic', component: CreateTopicComponent },
   { path: 'topic-profile/:topicId', component: TopicProfileComponent },
-  { path: 'discuss/:topicId', component: DiscussionComponent },
+  { path: 'discuss/:topicId', component: DiscussionComponent },// ok
   { path: 'group/:topicId', component: GroupComponent },
   { path: 'post-view/:postId', component: PostViewComponent },
   { path: 'discuss-home', component: DiscussionHomeComponent },

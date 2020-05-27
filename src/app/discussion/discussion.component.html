@@ -1,14 +1,14 @@
-<div *ngFor="let discussion of discussions$|async">
-    <mat-card style="margin-top: 2rem; border-radius:2rem;">
-        <mat-card-title>
-            {{discussion.user.nickname}}
-        </mat-card-title>
-        <mat-card-content>
-            {{discussion.text}}
-            <img *ngIf="discussion.imageUrl" [src]="discussion.imageUrl" style="max-width: 600px; max-height: 400px;">
-        </mat-card-content>
-    </mat-card>
+<div *ngIf="(topic$|async) as topic">
+    <h1> {{topic.name}} </h1>
+    <h2> {{topic.description}} </h2>
+    <h3 style="display: flex">
+        <mat-icon>person</mat-icon> {{topic.memberCount}}
+    </h3>
 </div>
+
+<h2>讨论列表</h2>
+
+<app-discussion-list [discussions]="discussions$|async"></app-discussion-list>
 
 <form [formGroup]="discussForm">
 

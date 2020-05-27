@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TopicService, QPost, QDiscussion, SendDiscussionModel } from 'src/openapi';
+import { TopicService, QPost, QDiscussion, SendDiscussionModel, QTopic } from 'src/openapi';
 import { NotificationService } from '../notification.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../authentication.service';
@@ -17,6 +17,8 @@ export class DiscussionComponent implements OnInit {
 
   @Input('topicId$')
   topicId$: Observable<string>;
+
+  topic$: Observable<QTopic>;
 
   discussions$: Observable<QDiscussion[]>;
 
@@ -36,6 +38,11 @@ export class DiscussionComponent implements OnInit {
     if (this.topicId$ == null) {
       this.topicId$ = this.route.paramMap.pipe(map(m => m.get('topicId')));
     }
+
+    this.topic$ = this.topicId$.pipe(
+      switchMap(id => this.topicApi.getTopicProfile(id)),
+      shareReplay(1)
+    );
 
     this.discussions$ = this.topicId$.pipe(
       switchMap(id => this.topicApi.getDiscussions(id, 0)),
