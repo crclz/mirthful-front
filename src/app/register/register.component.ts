@@ -24,7 +24,10 @@ export class RegisterComponent implements OnInit {
         label: '用户名',
         minLength: 3,
         maxLength: 12,
-        required: true
+        required: true,
+        attributes: {
+          autocomplete: 'off'
+        }
       }
     }, {
       key: 'password',
@@ -43,14 +46,20 @@ export class RegisterComponent implements OnInit {
         label: '昵称',
         minLength: 1,
         maxLength: 16,
-        required: true
+        required: true,
+        attributes: {
+          autocomplete: 'off'
+        }
       }
     }, {
       key: 'description',
       type: 'input',
       templateOptions: {
         label: '个人简介',
-        maxLength: 32
+        maxLength: 32,
+        attributes: {
+          autocomplete: 'off'
+        }
       }
     }
   ];

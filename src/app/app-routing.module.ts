@@ -18,7 +18,7 @@ import { WorkHomeComponent } from './work-home/work-home.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'comment/:workId', component: CommentComponent },
+  { path: 'comment/:workId', component: CommentComponent },// not
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'work/:workId', component: WorkComponent },
