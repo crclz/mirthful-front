@@ -2,36 +2,43 @@
 
 <!-- 热点信息模块==================== -->
 
-<!-- 热门书籍 -->
-<h2>热门书籍</h2>
-<app-work-list [works]="hotBooks$|async"></app-work-list>
+<mat-tab-group mat-align-tabs="center">
+    <mat-tab label="热门书籍">
+        <app-work-list [works]="hotBooks$|async"></app-work-list>
+    </mat-tab>
 
-<!-- 热门影视 -->
-<h2>热门影视</h2>
-<app-work-list [works]="hotFilms$|async"></app-work-list>
+    <mat-tab label="热门影视">
+        <app-work-list [works]="hotFilms$|async"></app-work-list>
+    </mat-tab>
 
-<!-- 热门评论 -->
-<h2>热门评论</h2>
-<div *ngFor="let comment of hotComments$ | async">
-    <mat-card style="margin-top: 2em; border-radius:2em;">
-        <mat-card-title>{{comment.user.nickname}}</mat-card-title>
-        <mat-card-content>
-            <!-- Rating Stars -->
-            <div>
-                <ng-container *ngFor="let k of genlist(comment.rating)">
-                    <mat-icon color="accent">star</mat-icon>
-                </ng-container>
-            </div>
-            {{comment.text}}
-        </mat-card-content>
-        <mat-card-actions>
-        </mat-card-actions>
-    </mat-card>
-</div>
+    <mat-tab label="热门评论">
+        <div *ngFor="let comment of hotComments$ | async">
+            <mat-card style="margin-top: 2em; border-radius:2em;">
+                <mat-card-title>{{comment.user.nickname}}</mat-card-title>
+                <mat-card-content>
+                    <!-- Rating Stars -->
+                    <div>
+                        <ng-container *ngFor="let k of genlist(comment.rating)">
+                            <mat-icon color="accent">star</mat-icon>
+                        </ng-container>
+                    </div>
+                    {{comment.text}}
+                </mat-card-content>
+                <mat-card-actions>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </mat-tab>
+
+    <mat-tab [label]="'热门话题'">
+        <app-topic-list [topics]="hotTopics$|async"></app-topic-list>
+    </mat-tab>
+</mat-tab-group>
+
 
 <!-- 热门话题 -->
 <h2>热门话题</h2>
-<app-topic-list [topics]="hotTopics$|async"></app-topic-list>
+
 
 <hr>
 
