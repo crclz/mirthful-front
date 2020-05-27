@@ -16,6 +16,11 @@
             <button mat-flat-button color="accent" (click)="joinTopic(topic.id)">加入</button>
         </ng-container>
 
+        <!-- Not logged in -->
+        <ng-container *ngIf="(this.auth.me$|async)==null">
+            <button mat-flat-button color="accent" (click)="auth.showLoginDialog()">登录后加入</button>
+        </ng-container>
+
     </div>
 
     <ng-container *ngIf="(membership$|async)!=null">

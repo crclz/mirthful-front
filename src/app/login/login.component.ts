@@ -4,6 +4,8 @@ import { NotificationService } from '../notification.service';
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
+import { AuthenticationService } from '../authentication.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,9 @@ export class LoginComponent implements OnInit {
   constructor(
     private accessApi: AccessService,
     private noti: NotificationService,
-    private router: Router
+    private router: Router,
+    private auth: AuthenticationService,
+    public dialogRef: MatDialogRef<LoginComponent>,
   ) { }
 
   form = new FormGroup({});
@@ -50,10 +54,9 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.accessApi.login(this.model).subscribe(() => {
-      this.noti.ok("登录成功!")
-      setTimeout(() => {
-        this.router.navigate(['/']);
-      }, 1000);
+      this.noti.ok("登录成功!");
+      this.dialogRef.close();
+      this.auth.refresh();
     }, p => this.noti.error(p))
   }
 

@@ -1,6 +1,4 @@
-<div style="display: flex; justify-content: center;">
-    <form [formGroup]="form" (ngSubmit)="login()">
-        <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
-        <button mat-raised-button color="accent" type="submit" [disabled]="form.invalid">登录</button>
-    </form>
-</div>
+<form [formGroup]="form" (ngSubmit)="login()">
+    <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+    <button mat-raised-button color="accent" type="submit" [disabled]="form.invalid">登录</button>
+</form>
