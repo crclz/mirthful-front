@@ -40,6 +40,8 @@ import { WorkListComponent } from './work-home/work-list/work-list.component';
 import { DiscussionListComponent } from './discussion-home/discussion-list/discussion-list.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { OrderTypePipe } from './order-type.pipe';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,8 @@ import { MatDividerModule } from '@angular/material/divider';
     TopicListComponent,
     WorkHomeComponent,
     WorkListComponent,
-    DiscussionListComponent
+    DiscussionListComponent,
+    OrderTypePipe
   ],
   imports: [
     BrowserModule,
@@ -83,7 +86,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatDialogModule,
     FormsModule,
     MatTabsModule,
-    MatDividerModule
+    MatDividerModule,
+    MatPaginatorModule
   ],
   providers: [{ provide: BASE_PATH, useValue: '' }],
   bootstrap: [AppComponent]

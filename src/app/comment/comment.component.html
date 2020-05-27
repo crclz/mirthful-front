@@ -9,11 +9,17 @@
     </form>
 </div>
 
+<div style="display: flex; justify-content: flex-end; flex-direction: row;">
+    <mat-paginator [length]="999" [pageSize]="20" (page)="onPageChange($event)"></mat-paginator>
+    <button mat-flat-button color="primary" (click)="switchOrderType()">{{orderType | orderType}}</button>
+</div>
+
+
 <h2 style="margin-top: 3rem;">评论列表</h2>
-<button mat-flat-button color="primary" (click)="switchOrderType()">{{orderType}}</button>
+
 
 <div *ngFor="let comment of comments$ | async">
-    <mat-card style="margin-top: 2rem; border-radius:2rem;">
+    <mat-card style="margin-top: 0.2rem; border-radius:2rem;">
         <mat-card-title>
             {{comment.user.nickname}}
             <ng-container *ngFor="let k of genlist(comment.rating)">

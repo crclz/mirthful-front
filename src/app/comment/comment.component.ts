@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { WorkService, CommentsService, QComment, OrderByType, CreateCommentModel } from 'src/openapi';
 import { ActivatedRoute } from '@angular/router';
-import { map, switchMap, shareReplay, take, filter, tap, startWith } from 'rxjs/operators';
-import { Observable, combineLatest, Subject, ReplaySubject, of } from 'rxjs';
+import { map, switchMap, shareReplay, take, filter, tap, startWith, debounce, debounceTime } from 'rxjs/operators';
+import { Observable, combineLatest, Subject, ReplaySubject, of, BehaviorSubject } from 'rxjs';
 import { QWork } from 'src/openapi/model/qWork';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
@@ -10,6 +10,7 @@ import { NotificationService } from '../notification.service';
 import { AuthenticationService } from '../authentication.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-comment',
@@ -25,7 +26,7 @@ export class CommentComponent implements OnInit {
 
   myAttitude: number = 1;
 
-  order$ = new ReplaySubject<OrderByType>();// remember to initialize
+  order$ = new BehaviorSubject<OrderByType>(OrderByType.Hottest);// remember to initialize
   orderType = OrderByType.Hottest;
 
   switchOrderType() {
@@ -34,6 +35,12 @@ export class CommentComponent implements OnInit {
     else
       this.orderType = OrderByType.Newest;
     this.order$.next(this.orderType);
+  }
+
+  page$ = new BehaviorSubject<number>(0);
+
+  onPageChange($event: PageEvent) {
+    this.page$.next($event.pageIndex);
   }
 
   constructor(
@@ -57,8 +64,9 @@ export class CommentComponent implements OnInit {
     //   shareReplay(1)
     // )
 
-    this.comments$ = combineLatest(this.workId$, this.order$).pipe(
-      switchMap(([workId, order]) => this.commentApi.getByWork(workId, order, 0)),
+    this.comments$ = combineLatest(this.workId$, this.order$, this.page$).pipe(
+      debounceTime(300),
+      switchMap(([workId, order, pageNumber]) => this.commentApi.getByWork(workId, order, pageNumber)),
       shareReplay(1)
     )
   }
