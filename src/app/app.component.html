@@ -1,10 +1,17 @@
 <mat-toolbar color="primary">
-  <span>Project Mirthful Fallback Frontend</span>
+  <mat-toolbar-row>
+    <span>书籍影视交流平台</span>
 
-  <!-- This fills the remaining space of the current row -->
-  <span class="fill-remaining"></span>
+    <!-- This fills the remaining space of the current row -->
+    <span class="fill-remaining"></span>
 
-  <span>Right</span>
+
+    <ng-container *ngIf="(auth.me$|async)==null">
+      <a mat-button [routerLink]="['/register']">注册</a>
+      <button mat-button (click)="auth.showLoginDialog()">登录</button>
+    </ng-container>
+    <span *ngIf="(auth.me$|async) as me">你好，{{me.nickname}} </span>
+  </mat-toolbar-row>
 
 </mat-toolbar>
 

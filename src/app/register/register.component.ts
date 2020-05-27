@@ -78,7 +78,7 @@ export class RegisterComponent implements OnInit {
     this.userApi.register(this.model).subscribe(() => {
       this.noti.ok("注册成功");
       setTimeout(() => {
-        this.router.navigate(['/login'])
+        this.router.navigate(['/home'])
       }, 2000);
     }, p => this.noti.error(p));
   }

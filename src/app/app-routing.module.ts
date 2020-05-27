@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'comment/:workId', component: CommentComponent },// not
   { path: 'register', component: RegisterComponent },
-  { path: 'login', component: LoginComponent },
+  // { path: 'login', component: LoginComponent },
   { path: 'work/:workId', component: WorkComponent },
   { path: 'create-topic', component: CreateTopicComponent },
   { path: 'topic-profile/:topicId', component: TopicProfileComponent },
