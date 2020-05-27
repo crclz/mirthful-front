@@ -4,46 +4,66 @@
 
 <mat-tab-group mat-align-tabs="center">
     <mat-tab label="热门书籍">
-        <app-work-list [works]="hotBooks$|async"></app-work-list>
+        <div style="height: calc(70vh); overflow-y: scroll;">
+            <app-work-list [works]="hotBooks$|async"></app-work-list>
+        </div>
     </mat-tab>
 
     <mat-tab label="热门影视">
-        <app-work-list [works]="hotFilms$|async"></app-work-list>
+        <div style="height: calc(70vh); overflow-y: scroll;">
+            <app-work-list [works]="hotFilms$|async"></app-work-list>
+        </div>
     </mat-tab>
 
     <mat-tab label="热门评论">
-        <div *ngFor="let comment of hotComments$ | async">
-            <mat-card style="margin-top: 2em; border-radius:2em;">
-                <mat-card-title>{{comment.user.nickname}}</mat-card-title>
-                <mat-card-content>
-                    <!-- Rating Stars -->
-                    <div>
-                        <ng-container *ngFor="let k of genlist(comment.rating)">
-                            <mat-icon color="accent">star</mat-icon>
-                        </ng-container>
-                    </div>
-                    {{comment.text}}
-                </mat-card-content>
-                <mat-card-actions>
-                </mat-card-actions>
-            </mat-card>
+        <div style="height: calc(70vh); overflow-y: scroll;">
+
+            <div *ngFor="let comment of hotComments$ | async" style="display: flex; justify-content: center;">
+
+                <mat-card style="margin: 0.2em; margin-bottom: 0.8em; border-radius:2em; width: 600px;">
+                    <mat-card-header>
+                        <mat-card-title>
+                            作品：
+                            <a style="text-decoration: none;" [routerLink]="['/work',comment.work.id]">
+                                {{comment.work.name}} </a>
+
+                        </mat-card-title>
+                        <mat-card-subtitle> 评论者：{{comment.user.nickname}} </mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <!-- Rating Stars -->
+                        <div>
+                            <ng-container *ngFor="let k of genlist(comment.rating)">
+                                <mat-icon color="accent">star</mat-icon>
+                            </ng-container>
+                        </div>
+                        <div class="overf" style="-webkit-line-clamp: 4;">
+                            {{comment.text}}
+                        </div>
+
+                    </mat-card-content>
+                    <mat-card-actions>
+                    </mat-card-actions>
+                </mat-card>
+
+            </div>
         </div>
     </mat-tab>
 
     <mat-tab [label]="'热门话题'">
-        <app-topic-list [topics]="hotTopics$|async"></app-topic-list>
+        <div style="height: calc(70vh); overflow-y: scroll;">
+            <app-topic-list [topics]="hotTopics$|async"></app-topic-list>
+        </div>
     </mat-tab>
 </mat-tab-group>
 
 
-<!-- 热门话题 -->
-<h2>热门话题</h2>
-
-
-<hr>
+<mat-divider></mat-divider>
 
 
 <!-- 搜索功能======================= -->
+
+<h1 style="margin-top: 3em;">搜索</h1>
 
 <mat-form-field>
     <input matInput placeholder="关键词" [(ngModel)]="wordInput">

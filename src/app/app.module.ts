@@ -39,6 +39,7 @@ import { WorkHomeComponent } from './work-home/work-home.component';
 import { WorkListComponent } from './work-home/work-list/work-list.component';
 import { DiscussionListComponent } from './discussion-home/discussion-list/discussion-list.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatChipsModule,
     MatDialogModule,
     FormsModule,
-    MatTabsModule
+    MatTabsModule,
+    MatDividerModule
   ],
   providers: [{ provide: BASE_PATH, useValue: '' }],
   bootstrap: [AppComponent]
