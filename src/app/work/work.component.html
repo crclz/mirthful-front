@@ -1,8 +1,9 @@
 <!-- Work description area -->
 <div *ngIf="(work$|async) as work">
     <h1> {{work.name}} (Type {{work.type}}) </h1>
-    <h2>创作者：{{work.author}}</h2>
-    <h2>简介：{{work.description}}</h2>
+    <h2>{{work.author}}</h2>
+    <h2>简介</h2>
+    <p>{{work.description}}</p>
 </div>
 
 <!-- Work's comment area -->

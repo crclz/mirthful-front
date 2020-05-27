@@ -1,17 +1,26 @@
 <!-- Comment List -->
 
-<button mat-flat-button color="primary" (click)="switchOrderType()" >{{orderType}}</button>
+<!-- User leave comment -->
+<h2>新增评论</h2>
+<div *ngIf="this.auth.me$ | async">
+    <form [formGroup]="commentForm" (ngSubmit)="createComment()">
+        <formly-form [form]="commentForm" [fields]="commentFields" [model]="commemtModel"></formly-form>
+        <button mat-raised-button color="accent" type="submit" [disabled]="commentForm.invalid">发送</button>
+    </form>
+</div>
+
+<h2 style="margin-top: 3rem;">评论列表</h2>
+<button mat-flat-button color="primary" (click)="switchOrderType()">{{orderType}}</button>
 
 <div *ngFor="let comment of comments$ | async">
-    <mat-card style="margin-top: 2em; border-radius:2em;">
-        <mat-card-title>{{comment.user.nickname}}</mat-card-title>
+    <mat-card style="margin-top: 2rem; border-radius:2rem;">
+        <mat-card-title>
+            {{comment.user.nickname}}
+            <ng-container *ngFor="let k of genlist(comment.rating)">
+                <mat-icon color="accent">star</mat-icon>
+            </ng-container>
+        </mat-card-title>
         <mat-card-content>
-            <!-- Rating Stars -->
-            <div>
-                <ng-container *ngFor="let k of genlist(comment.rating)">
-                    <mat-icon color="accent">star</mat-icon>
-                </ng-container>
-            </div>
             {{comment.text}}
         </mat-card-content>
         <mat-card-actions>
@@ -20,7 +29,7 @@
             <button mat-icon-button (click)="expressAttitude(comment,true);">
                 <mat-icon [color]="comment.myAttitude==true?'accent':''">thumb_up</mat-icon>
             </button>
-            <span style="padding-right: 2em;">
+            <span style="padding-right: 2rem;">
                 {{comment.agreeCount}}
             </span>
 
@@ -35,12 +44,4 @@
             </button>
         </mat-card-actions>
     </mat-card>
-</div>
-
-<!-- User leave comment -->
-<div *ngIf="this.auth.me$ | async">
-    <form [formGroup]="commentForm" (ngSubmit)="createComment()">
-        <formly-form [form]="commentForm" [fields]="commentFields" [model]="commemtModel"></formly-form>
-        <button mat-raised-button color="accent" type="submit" [disabled]="commentForm.invalid">发送</button>
-    </form>
 </div>

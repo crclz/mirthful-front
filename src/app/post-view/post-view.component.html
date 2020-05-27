@@ -1,5 +1,5 @@
 <div *ngIf="(post$|async) as post">
-    <mat-card style="margin-top: 2em; border-radius:2em;">
+    <mat-card style="margin-top: 2rem; border-radius:2rem;">
         <mat-card-title>
             <mat-chip-list>
                 <mat-chip *ngIf="post.isPinned" color="primary" selected>
@@ -25,7 +25,7 @@
 </div>
 
 
-<mat-card *ngFor="let reply of replies$|async" style="margin-top: 2em; border-radius:2em; background-color: skyblue;">
+<mat-card *ngFor="let reply of replies$|async" style="margin-top: 2rem; border-radius:2rem; background-color: skyblue;">
     <mat-card-title>
         {{reply.user.nickname}}
     </mat-card-title>
