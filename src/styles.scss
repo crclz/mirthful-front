@@ -18,3 +18,10 @@ body {
 .test {
     margin-top: 1rem;
 }
+
+.overf {
+    display: -webkit-box !important;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+}

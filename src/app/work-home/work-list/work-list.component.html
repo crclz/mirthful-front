@@ -1,9 +1,13 @@
-<div *ngFor="let work of works">
-    <mat-card style="margin-top: 2em; border-radius:2em;">
-        <mat-card-title>
-            {{work.name}} ( {{work.type}} ) ({{work.author}})
-        </mat-card-title>
-        <mat-card-content>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+    <mat-card *ngFor="let work of works" style="margin: 0.2em; margin-bottom: 0.8em; border-radius:2em; width: 200px;">
+        <img mat-card-image src="/blob/example-cover.jpg">
+        <mat-card-header>
+            <mat-card-title>
+                <a style="text-decoration: none;" [routerLink]="['/work',work.id]"> {{work.name}} </a>
+            </mat-card-title>
+            <mat-card-subtitle> {{work.author}} </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="overf" style="-webkit-line-clamp: 4;">
             {{work.description}}
         </mat-card-content>
     </mat-card>
