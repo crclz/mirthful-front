@@ -4,8 +4,9 @@ import { QPost, TopicService, QReply } from 'src/openapi';
 import { NotificationService } from '../notification.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../authentication.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { map, switchMap, shareReplay, take } from 'rxjs/operators';
+import { ModelHintService } from '../model-hint.service';
 
 @Component({
   selector: 'app-post-view',
@@ -28,7 +29,8 @@ export class PostViewComponent implements OnInit {
     private noti: NotificationService,
     private route: ActivatedRoute,
     public auth: AuthenticationService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public hinter: ModelHintService
   ) { }
 
   ngOnInit(): void {
@@ -47,7 +49,7 @@ export class PostViewComponent implements OnInit {
     )
 
     this.replyFrom = this.fb.group({
-      text: ''
+      text: ['', [Validators.required, Validators.maxLength(120)]]
     })
   }
 
