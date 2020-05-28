@@ -42,6 +42,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { OrderTypePipe } from './order-type.pipe';
+import { WorkTypePipe } from './work-type.pipe';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -64,7 +67,8 @@ import { OrderTypePipe } from './order-type.pipe';
     WorkHomeComponent,
     WorkListComponent,
     DiscussionListComponent,
-    OrderTypePipe
+    OrderTypePipe,
+    WorkTypePipe
   ],
   imports: [
     BrowserModule,
@@ -87,7 +91,9 @@ import { OrderTypePipe } from './order-type.pipe';
     FormsModule,
     MatTabsModule,
     MatDividerModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatAutocompleteModule,
+    MatSlideToggleModule
   ],
   providers: [{ provide: BASE_PATH, useValue: '' }],
   bootstrap: [AppComponent]

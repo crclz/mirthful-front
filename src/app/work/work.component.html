@@ -1,10 +1,19 @@
 <!-- Work description area -->
 <div *ngIf="(work$|async) as work">
-    <h1> {{work.name}} (Type {{work.type}}) </h1>
-    <h2>{{work.author}}</h2>
+    <h1>
+        {{work.name}} <small>{{work.author}}</small>
+    </h1>
+    <h2>
+        <mat-icon *ngIf="work.type=='Book'">menu_book</mat-icon>
+        <mat-icon *ngIf="work.type=='Film'">videocam</mat-icon>
+        {{work.type|workType}}
+    </h2>
     <h2>简介</h2>
     <p>{{work.description}}</p>
 </div>
 
+<mat-divider style="margin-bottom: 2.5rem;"></mat-divider>
+
 <!-- Work's comment area -->
-<app-comment [workId$]="workId$"></app-comment>
+<app-comment [workId$]=" workId$">
+</app-comment>

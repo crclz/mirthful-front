@@ -1,12 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { FormGroup } from '@angular/forms';
-import { CreateTopicModel, TopicService } from 'src/openapi';
+import { Observable, of, Subject } from 'rxjs';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { CreateTopicModel, TopicService, QWork, WorkService, CreateCommentModel } from 'src/openapi';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { DisposableComponent } from '../disposable-component';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, filter, debounceTime, switchMap, shareReplay, distinctUntilChanged } from 'rxjs/operators';
 import { NotificationService } from '../notification.service';
+import { ModelHintService } from '../model-hint.service';
 
 @Component({
   selector: 'app-create-topic',
@@ -18,54 +19,30 @@ export class CreateTopicComponent extends DisposableComponent {
   @Input('workId$')
   workId$: Observable<string>;
 
-  form = new FormGroup({});
-  model: CreateTopicModel = { isGroup: false, name: '', description: '', relatedWork: '' }
+  form: FormGroup;
 
-  fields: FormlyFieldConfig[] = [
-    {
-      key: 'isGroup',
-      type: 'checkbox',
-      templateOptions: {
-        label: '是否是讨论组',
-        required: true
-      }
-    }, {
-      key: 'name',
-      type: 'input',
-      templateOptions: {
-        label: '名称',
-        minLength: 1,
-        maxLength: 20,
-        required: true
-      }
-    }, {
-      key: 'description',
-      type: 'input',
-      templateOptions: {
-        label: '描述',
-        minLength: 3,
-        maxLength: 320,
-        required: true
-      }
-    }, {
-      key: 'relatedWork',
-      type: 'input',
-      templateOptions: {
-        label: '作品id',
-        required: false
-      }
-    }
-  ]
+  alternativeWorks$: Observable<QWork[]>;
+  keyword$ = new Subject<string>();
 
   constructor(
     private topicApi: TopicService,
     private route: ActivatedRoute,
-    private noti: NotificationService
+    private noti: NotificationService,
+    private workApi: WorkService,
+    private fb: FormBuilder,
+    public hinter: ModelHintService
   ) {
     super()
   }
 
   ngOnInit(): void {
+    this.form = this.fb.group({
+      isGroup: [false, [Validators.required]],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+      description: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(300)]],
+      relatedWork: ['']
+    })
+
     if (this.workId$ == null) {
       this.workId$ = this.route.queryParamMap.pipe(
         map(pm => pm.get('workId') != null ? pm.get('workId') : '')
@@ -73,27 +50,23 @@ export class CreateTopicComponent extends DisposableComponent {
     }
 
     this.addToSubscriptions(
-      this.workId$.subscribe(id => this.model.relatedWork = id)
+      this.workId$.subscribe(id => this.form.get('relatedWork').setValue(id))
+    );
+
+    this.alternativeWorks$ = this.keyword$.pipe(
+      filter(w => w != null),
+      map(w => w.trim()),
+      filter(w => w != ''),
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(word => this.workApi.getWorkByKeyword(null, word, 0)),
+      shareReplay(1)
     );
   }
 
-  createTopic() {
-    // let data = {
-    //   name: this.model.name,
-    //   description: this.model.description,
-    //   isGroup: this.model.isGroup,
-    //   relatedWork: this.model.relatedWork
-    // };
-
-    // get snapshot
-    let data = Object.assign({}, this.model);
-
-    if (data.relatedWork.trim() == '') {
-      data.relatedWork = null;
-    }
-
+  createTopic(value: CreateTopicModel) {
     // TODO: redirect
-    this.topicApi.createTopic(data).subscribe(res => this.noti.ok("成功创建Topic"), res => this.noti.error(res));
+    this.topicApi.createTopic(value).subscribe(res => this.noti.ok("成功创建"), res => this.noti.error(res));
   }
 
 }

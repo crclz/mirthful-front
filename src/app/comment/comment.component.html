@@ -1,7 +1,7 @@
 <!-- Comment List -->
 
 <!-- User leave comment -->
-<h2>新增评论</h2>
+<h2>发表评论</h2>
 <div *ngIf="this.auth.me$ | async">
     <form [formGroup]="commentForm" (ngSubmit)="createComment()">
         <formly-form [form]="commentForm" [fields]="commentFields" [model]="commemtModel"></formly-form>
@@ -9,17 +9,21 @@
     </form>
 </div>
 
+<mat-divider style="margin:0.5rem 0 2.5rem"></mat-divider>
+
+
+<h2 style="margin-top: 3rem;">评论列表</h2>
+
 <div style="display: flex; justify-content: flex-end; flex-direction: row;">
     <mat-paginator [length]="999" [pageSize]="20" (page)="onPageChange($event)"></mat-paginator>
     <button mat-flat-button color="primary" (click)="switchOrderType()">{{orderType | orderType}}</button>
 </div>
 
 
-<h2 style="margin-top: 3rem;">评论列表</h2>
-
-
 <div *ngFor="let comment of comments$ | async">
-    <mat-card style="margin-top: 0.2rem; border-radius:2rem;">
+    <mat-divider></mat-divider>
+
+    <mat-card style="_margin-top: 0.2rem; _border-radius:2rem; border-color: slategray; padding-bottom: 0;">
         <mat-card-title>
             {{comment.user.nickname}}
             <ng-container *ngFor="let k of genlist(comment.rating)">
@@ -28,26 +32,30 @@
         </mat-card-title>
         <mat-card-content>
             {{comment.text}}
+
+            <div>
+                <!-- Attitude -->
+                <button mat-icon-button (click)="expressAttitude(comment,true);">
+                    <mat-icon [color]="comment.myAttitude==true?'accent':''">thumb_up</mat-icon>
+                </button>
+                <span style="padding-right: 1rem;">
+                    {{comment.agreeCount}}
+                </span>
+
+                <button mat-icon-button (click)="expressAttitude(comment,false)">
+                    <mat-icon [color]="comment.myAttitude==false?'accent':''">thumb_down</mat-icon>
+                </button>
+                <span style="padding-right: 2rem;">
+                    {{comment.disagreeCount}}
+                </span>
+                <!-- Report -->
+                <button mat-icon-button (click)="openReportDialog(comment.id)">
+                    <mat-icon color="primary">report</mat-icon>
+                </button>
+            </div>
         </mat-card-content>
-        <mat-card-actions>
 
-            <!-- Attitude -->
-            <button mat-icon-button (click)="expressAttitude(comment,true);">
-                <mat-icon [color]="comment.myAttitude==true?'accent':''">thumb_up</mat-icon>
-            </button>
-            <span style="padding-right: 2rem;">
-                {{comment.agreeCount}}
-            </span>
 
-            <button mat-icon-button (click)="expressAttitude(comment,false)">
-                <mat-icon [color]="comment.myAttitude==false?'accent':''">thumb_down</mat-icon>
-            </button>
-            {{comment.disagreeCount}}
 
-            <!-- Report -->
-            <button mat-icon-button (click)="openReportDialog(comment.id)">
-                <mat-icon color="primary">report</mat-icon>
-            </button>
-        </mat-card-actions>
     </mat-card>
 </div>

@@ -1,4 +1,38 @@
-<form [formGroup]="form" (ngSubmit)="createTopic()">
+<h1>创建话题/小组</h1>
+<!-- <form [formGroup]="form" (ngSubmit)="createTopic()">
     <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
     <button mat-raised-button color="accent" type="submit" [disabled]="form.invalid">注册</button>
+</form> -->
+
+<form [formGroup]="form" (submit)="createTopic(form.value)">
+
+    <!-- 类别 -->
+    <mat-slide-toggle formControlName="isGroup" #isg>{{isg.checked?'小组':'话题'}}</mat-slide-toggle>
+
+    <!-- 相关作品id -->
+    <mat-form-field class="full-width">
+        <input #searchbox matInput placeholder="相关作品id" [matAutocomplete]="auto" formControlName="relatedWork"
+            (input)="keyword$.next(searchbox.value)">
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let work of alternativeWorks$ | async" [value]="work.id">
+                <span>{{work.name}}</span> |
+                <small>{{work.type|workType}}</small> |
+                <small>{{work.author}}</small>
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+
+    <mat-form-field class="full-width">
+        <input matInput [placeholder]="isg.checked?'小组名称':'话题名称'" formControlName="name" autocomplete="off">
+        <mat-error>{{hinter.hint(form.get('name'))}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+        <input matInput placeholder="描述" formControlName="description" autocomplete="off">
+    </mat-form-field>
+
+    <div class="text-center">
+        <button mat-raised-button color="accent" type="submit" [disabled]="form.invalid">创建</button>
+    </div>
 </form>
