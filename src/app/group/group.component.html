@@ -1,6 +1,8 @@
 <div *ngFor="let post of posts$|async">
-    <mat-card style="margin-top: 2rem; border-radius:2rem;">
-        <mat-card-title>
+    <mat-divider></mat-divider>
+
+    <mat-card>
+        <div style="padding-bottom: 1rem;">
             <mat-chip-list>
                 <mat-chip *ngIf="post.isPinned" color="primary" selected>
                     <mat-icon>vertical_align_top</mat-icon>
@@ -11,16 +13,20 @@
                     精华
                 </mat-chip>
             </mat-chip-list>
+        </div>
+        <mat-card-header>
+            <mat-card-title>
+                <a [routerLink]="['/post-view',post.id]" style="text-decoration: none;"> {{post.title}}</a>
+            </mat-card-title>
+            <mat-card-subtitle>
+                @{{post.user.nickname}}
+            </mat-card-subtitle>
+        </mat-card-header>
 
-
-            {{post.user.nickname}}:
-            {{post.title}}
-        </mat-card-title>
         <mat-card-content>
-            <a [routerLink]="['/post-view',post.id]" style="text-decoration: none;">
-
+            <div class="overf" style="-webkit-line-clamp: 4;">
                 {{post.text}}
-            </a>
+            </div>
             <!-- <img *ngIf="post.image" [src]="post.image" style="max-width: 600px; max-height: 400px;"> -->
         </mat-card-content>
 
@@ -29,21 +35,21 @@
             <ng-container *ngIf="(member$|async) as member">
                 <ng-container *ngIf="member.role=='Admin'||member.role=='Super'">
 
-                    <button *ngIf="!post.isPinned" mat-flat-button color="primary"
+                    <button *ngIf="!post.isPinned" mat-button color="primary"
                         (click)="setPinned(post.id,true)">置顶</button>
 
-                    <button *ngIf="post.isPinned" mat-flat-button color="accent"
+                    <button *ngIf="post.isPinned" mat-button color="accent"
                         (click)="setPinned(post.id,false)">取消置顶</button>
 
 
-                    <button *ngIf="!post.isEssense" mat-flat-button color="primary"
+                    <button *ngIf="!post.isEssense" mat-button color="primary"
                         (click)="setEssence(post.id,true)">设为精华</button>
 
-                    <button *ngIf="post.isEssense" mat-flat-button color="primary"
+                    <button *ngIf="post.isEssense" mat-button color="primary"
                         (click)="setEssence(post.id,false)">取消精华</button>
 
 
-                    <button mat-flat-button color="primary" (click)="setRemove(post.id,true)">删帖</button>
+                    <button mat-button color="primary" (click)="setRemove(post.id,true)">删帖</button>
                 </ng-container>
             </ng-container>
 
