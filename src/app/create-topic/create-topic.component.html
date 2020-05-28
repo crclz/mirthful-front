@@ -8,6 +8,7 @@
 
     <!-- 类别 -->
     <mat-slide-toggle formControlName="isGroup" #isg>{{isg.checked?'小组':'话题'}}</mat-slide-toggle>
+    <mat-error>{{hinter.hint(form.get('isGroup'))}}</mat-error>
 
     <!-- 相关作品id -->
     <mat-form-field class="full-width">
@@ -30,6 +31,7 @@
 
     <mat-form-field class="full-width">
         <input matInput placeholder="描述" formControlName="description" autocomplete="off">
+        <mat-error>{{hinter.hint(form.get('description'))}}</mat-error>
     </mat-form-field>
 
     <div class="text-center">

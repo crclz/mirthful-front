@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CreateTopicModel, TopicService, QWork, WorkService, CreateCommentModel } from 'src/openapi';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { DisposableComponent } from '../disposable-component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map, filter, debounceTime, switchMap, shareReplay, distinctUntilChanged } from 'rxjs/operators';
 import { NotificationService } from '../notification.service';
 import { ModelHintService } from '../model-hint.service';
@@ -30,7 +30,8 @@ export class CreateTopicComponent extends DisposableComponent {
     private noti: NotificationService,
     private workApi: WorkService,
     private fb: FormBuilder,
-    public hinter: ModelHintService
+    public hinter: ModelHintService,
+    private router: Router
   ) {
     super()
   }
@@ -65,8 +66,12 @@ export class CreateTopicComponent extends DisposableComponent {
   }
 
   createTopic(value: CreateTopicModel) {
-    // TODO: redirect
-    this.topicApi.createTopic(value).subscribe(res => this.noti.ok("成功创建"), res => this.noti.error(res));
+    this.topicApi.createTopic(value).subscribe(res => {
+      this.noti.ok("成功创建，即将跳转到新建的话题/小组");
+      setTimeout(() => {
+        this.router.navigate(['/topic-profile', res.id]);
+      }, 1500);
+    }, res => this.noti.error(res));
   }
 
 }
