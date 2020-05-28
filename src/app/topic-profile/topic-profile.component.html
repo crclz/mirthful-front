@@ -36,13 +36,26 @@
     </div>
 
     <!-- Is a member -->
-    <ng-container *ngIf="(membership$|async)!=null">
+    <ng-container *ngIf="(membership$|async) as member">
         <h2>你已经是成员✔</h2>
+        <div *ngIf="member.role=='Normal' && topic.isGroup">
+            <button mat-raised-button (click)="sendBeAdminRequest(topic.id)">成为小组管理员</button>
+        </div>
+        <div *ngIf="member.role=='Admin' && topic.isGroup">
+            <h2>我的角色：管理员</h2>
+        </div>
+        <div *ngIf="member.role=='Super' && topic.isGroup">
+            <h2>我的角色：超级管理员</h2>
+        </div>
     </ng-container>
+
+    <mat-divider style="margin: 2.5rem 0 2.5rem;"></mat-divider>
 
     <!-- Requests -->
     <div *ngIf="(membership$|async) as member">
         <div *ngIf="member.role=='Super' ">
+            <h1>管理员申请</h1>
+
             <div *ngFor="let request of requests$|async">
                 用户Id: {{request.user.id}},
                 用户昵称: {{request.user.nickname}}
