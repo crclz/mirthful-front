@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { QPost, TopicService, QReply } from 'src/openapi';
 import { NotificationService } from '../notification.service';
 import { ActivatedRoute } from '@angular/router';
@@ -7,6 +7,7 @@ import { AuthenticationService } from '../authentication.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { map, switchMap, shareReplay, take } from 'rxjs/operators';
 import { ModelHintService } from '../model-hint.service';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-post-view',
@@ -23,6 +24,14 @@ export class PostViewComponent implements OnInit {
   replies$: Observable<QReply[]>;
 
   replyFrom: FormGroup;
+
+  page$ = new BehaviorSubject<number>(0);
+
+  onPageChange($event: PageEvent) {
+    this.page$.next($event.pageIndex);
+  }
+
+  repliesRefresher$ = new BehaviorSubject<number>(0);
 
   constructor(
     private topicApi: TopicService,
@@ -43,13 +52,13 @@ export class PostViewComponent implements OnInit {
       shareReplay(1)
     )
 
-    this.replies$ = this.postId$.pipe(
-      switchMap(id => this.topicApi.getReplies(id, 0)),
+    this.replies$ = combineLatest(this.postId$, this.page$, this.repliesRefresher$).pipe(
+      switchMap(([id, page]) => this.topicApi.getReplies(id, page)),
       shareReplay(1)
-    )
+    );
 
     this.replyFrom = this.fb.group({
-      text: ['', [Validators.required, Validators.maxLength(120)]]
+      text: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(120)]]
     })
   }
 
@@ -57,7 +66,11 @@ export class PostViewComponent implements OnInit {
     this.postId$.pipe(
       take(1),
       switchMap(id => this.topicApi.sendReply({ postId: id, text: data.text })),
-    ).subscribe(() => this.noti.ok("回复成功"), p => this.noti.error(p))
+    ).subscribe(() => {
+      this.noti.ok("回复成功");
+      this.replyFrom.reset();
+      this.repliesRefresher$.next(1);
+    }, p => this.noti.error(p))
     this.replyFrom.reset();
     console.warn(data)
   }

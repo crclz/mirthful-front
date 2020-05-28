@@ -28,6 +28,11 @@
     </mat-card-content>
 </mat-card>
 
+<mat-divider style="margin: 2.5rem 0 2.5rem;"></mat-divider>
+
+<h1>回复列表</h1>
+<mat-paginator [length]="999" [pageSize]="20" (page)="onPageChange($event)"></mat-paginator>
+
 <!-- Replies -->
 <div *ngFor="let reply of replies$|async">
     <mat-divider></mat-divider>
