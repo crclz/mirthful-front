@@ -1,3 +1,21 @@
+<!-- 基本信息 -->
+<div *ngIf="(topic$ |async) as topic">
+    <h1> {{topic.name}} | <small> {{topic.isGroup?'小组':'话题'}}</small> </h1>
+    <h2>
+        <a class="aclean" [routerLink]="['/topic-profile',topic.id]">小组基本信息页</a>
+    </h2>
+
+    <h2>简介 </h2>
+    <p>{{topic.description}}</p>
+</div>
+
+<mat-divider style="margin: 2.5rem 0 2.5rem;"></mat-divider>
+
+<!-- Post list -->
+<h1>帖子列表</h1>
+
+<mat-paginator [length]="999" [pageSize]="20" (page)="onPageChange($event)"></mat-paginator>
+
 <div *ngFor="let post of posts$|async">
     <mat-divider></mat-divider>
 
@@ -57,15 +75,21 @@
     </mat-card>
 </div>
 
+<mat-divider style="margin: 2.5rem 0 2.5rem;"></mat-divider>
+
+<h1>发帖</h1>
+
 <form [formGroup]="sendPostForm" (submit)="sendPost(sendPostForm.value)">
-    <mat-form-field>
-        <input matInput placeholder="帖子标题" formControlName="title" required maxlength="22">
+    <mat-form-field class="full-width">
+        <input matInput placeholder="帖子标题" formControlName="title">
+        <mat-error>{{hinter.hint(sendPostForm.get('title'))}}</mat-error>
     </mat-form-field>
 
-    <mat-form-field>
-        <input matInput placeholder="正文" formControlName="text" required minlength="25" maxlength="800">
+    <mat-form-field class="full-width">
+        <textarea rows="6" matInput placeholder="正文" formControlName="text"></textarea>
+        <mat-error>{{hinter.hint(sendPostForm.get('text'))}}</mat-error>
     </mat-form-field>
 
-    <button type="submit" mat-flat-button color="accent">发送帖子</button>
+    <button type="submit" mat-flat-button color="accent" [disabled]="sendPostForm.invalid">发送帖子</button>
 
 </form>
