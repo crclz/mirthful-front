@@ -1,10 +1,18 @@
 <div *ngIf="(topic$|async) as topic">
-    <h1> {{topic.name}} </h1>
-    <h2> {{topic.description}} </h2>
+    <h1> {{topic.name}} | <small> {{topic.isGroup?'小组':'话题'}}</small> </h1>
+
     <h3 style="display: flex">
         <mat-icon>person</mat-icon> {{topic.memberCount}}
     </h3>
-    <h3 *ngIf="topic.relatedWork"> 相关作品：{{topic.relatedWork}} </h3>
+
+    <h2> 简介 </h2>
+    <p>{{topic.description}}</p>
+
+
+    <ng-container *ngIf="(relatedWork$|async) as work">
+        <h3>相关作品</h3>
+        <p> <a style="text-decoration: none;" [routerLink]="['/work',work.id]">{{work.name}} | {{work.author}}</a> </p>
+    </ng-container>
 
 
 
@@ -23,6 +31,7 @@
 
     </div>
 
+    <!-- Is a member -->
     <ng-container *ngIf="(membership$|async)!=null">
         <h2>你已经是成员✔</h2>
     </ng-container>

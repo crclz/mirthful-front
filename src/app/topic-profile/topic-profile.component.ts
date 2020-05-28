@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable, combineLatest, of } from 'rxjs';
-import { TopicService, QTopic, QTopicMember, JoinTopicModel, GroupManageService, QAdminRequest } from 'src/openapi';
+import { Observable, combineLatest, of, BehaviorSubject } from 'rxjs';
+import { TopicService, QTopic, QTopicMember, JoinTopicModel, GroupManageService, QAdminRequest, QWork, WorkService } from 'src/openapi';
 import { NotificationService } from '../notification.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map, switchMap, shareReplay } from 'rxjs/operators';
 import { AuthenticationService } from '../authentication.service';
 
@@ -18,7 +18,11 @@ export class TopicProfileComponent implements OnInit {
 
   topic$: Observable<QTopic>;
 
+  relatedWork$: Observable<QWork>;
+
   membership$: Observable<QTopicMember>;
+
+  refresher$ = new BehaviorSubject<number>(0);
 
   requests$: Observable<QAdminRequest[]>
 
@@ -27,7 +31,9 @@ export class TopicProfileComponent implements OnInit {
     private noti: NotificationService,
     private route: ActivatedRoute,
     public auth: AuthenticationService,
-    public groupManage: GroupManageService
+    public groupManage: GroupManageService,
+    private workApi: WorkService,
+    private router: Router
   ) {
 
   }
@@ -46,7 +52,7 @@ export class TopicProfileComponent implements OnInit {
       shareReplay(1)
     );
 
-    this.membership$ = combineLatest(this.auth.me$, this.topicId$).pipe(
+    this.membership$ = combineLatest(this.auth.me$, this.topicId$, this.refresher$).pipe(
       switchMap(([me, topicId]) => me == null ? of(null) : this.topicApi.getMembership(topicId)),
       shareReplay(1)
     );
@@ -55,11 +61,19 @@ export class TopicProfileComponent implements OnInit {
       switchMap(id => this.groupManage.getUnhandledRequests(id, 0, true)),
       shareReplay(1)
     );
+
+    this.relatedWork$ = this.topic$.pipe(
+      switchMap(topic => topic.relatedWork == null ? of(null) : this.workApi.getWorkById(topic.relatedWork)),
+      shareReplay(1)
+    );
   }
 
   joinTopic(topicId: string) {
     this.topicApi.joinTopic({ topicId: topicId })
-      .subscribe(p => this.noti.ok("加入成功"), p => this.noti.error(p));
+      .subscribe(p => {
+        this.noti.ok("加入成功");
+        this.refresher$.next(1);
+      }, p => this.noti.error(p));
   }
 
   sendBeAdminRequest(topicId: string) {
