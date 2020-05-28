@@ -1,12 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { TopicService, QPost, QDiscussion, SendDiscussionModel, QTopic } from 'src/openapi';
 import { NotificationService } from '../notification.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../authentication.service';
-import { map, switchMap, take, shareReplay, withLatestFrom } from 'rxjs/operators';
+import { map, switchMap, take, shareReplay, withLatestFrom, debounceTime } from 'rxjs/operators';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-topic',
@@ -26,6 +27,12 @@ export class DiscussionComponent implements OnInit {
 
   image: File;
 
+  page$ = new BehaviorSubject<number>(0);
+
+  onPageChange($event: PageEvent) {
+    this.page$.next($event.pageIndex);
+  }
+
   constructor(
     private topicApi: TopicService,
     private noti: NotificationService,
@@ -44,8 +51,9 @@ export class DiscussionComponent implements OnInit {
       shareReplay(1)
     );
 
-    this.discussions$ = this.topicId$.pipe(
-      switchMap(id => this.topicApi.getDiscussions(id, 0)),
+    this.discussions$ = combineLatest(this.topicId$, this.page$).pipe(
+      debounceTime(300),
+      switchMap(([topicId, pageNumber]) => this.topicApi.getDiscussions(topicId, pageNumber)),
       shareReplay(1)
     );
 

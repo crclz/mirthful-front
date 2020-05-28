@@ -1,15 +1,26 @@
 <div *ngIf="(topic$|async) as topic">
-    <h1> {{topic.name}} </h1>
-    <h2> {{topic.description}} </h2>
-    <h3 style="display: flex">
-        <mat-icon>person</mat-icon> {{topic.memberCount}}
-    </h3>
+    <h1> {{topic.name}} | <small> {{topic.isGroup?'小组':'话题'}}</small> </h1>
+    <h2>
+        <a class="aclean" [routerLink]="['/topic-profile',topic.id]">话题基本信息页</a>
+    </h2>
+
+    <h2> 简介 </h2>
+    <p>{{topic.description}}</p>
 </div>
+
+<mat-divider style="margin:2.5rem 0 2.5rem"></mat-divider>
 
 <h2>讨论列表</h2>
 
+<!-- 分页器 -->
+<mat-paginator [length]="999" [pageSize]="20" (page)="onPageChange($event)"></mat-paginator>
+
 <app-discussion-list [discussions]="discussions$|async"></app-discussion-list>
 
+<mat-divider style="margin:2.5rem 0 2.5rem"></mat-divider>
+
+<h1>发送评论</h1>
+<!-- 发送评论 -->
 <form [formGroup]="discussForm">
 
     <div style="display: flex; flex-direction: column;">
