@@ -81,19 +81,4 @@ export class GroupComponent implements OnInit {
     }, p => this.noti.error(p))
   }
 
-  setPinned(postId: string, status: boolean) {
-    this.topicApi.doAdmin({ postId: postId, action: AdminAction.IsPinned, status: status })
-      .subscribe(() => this.noti.ok("操作成功"), p => this.noti.error(p));
-  }
-
-  setEssence(postId: string, status: boolean) {
-    this.topicApi.doAdmin({ postId: postId, action: AdminAction.IsEssence, status: status })
-      .subscribe(() => this.noti.ok("操作成功"), p => this.noti.error(p));
-  }
-
-  setRemove(postId: string, status: boolean) {
-    this.topicApi.doAdmin({ postId: postId, action: AdminAction.Remove, status: status })
-      .subscribe(() => this.noti.ok("操作成功"), p => this.noti.error(p));
-  }
-
 }

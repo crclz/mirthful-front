@@ -11,6 +11,7 @@
 <h2>话题</h2>
 <app-topic-list [topics]="topics$|async"></app-topic-list>
 
+<mat-divider style="margin: 2.5rem 0 2.5rem;"></mat-divider>
 
 <h2>话题内容</h2>
-<app-discussion-list [discussions]="discussions$|async"></app-discussion-list>
+<app-discussion-list [showLink]="true" [discussions]="discussions$|async"></app-discussion-list>
