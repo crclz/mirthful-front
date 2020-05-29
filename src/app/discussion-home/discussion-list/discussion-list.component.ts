@@ -12,6 +12,9 @@ export class DiscussionListComponent implements OnInit {
   @Input('discussions')
   discussions: Observable<QDiscussion[]>;
 
+  @Input('showLink')
+  showLink: boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {

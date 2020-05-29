@@ -1,10 +1,16 @@
 <div *ngFor="let discussion of discussions">
     <mat-divider></mat-divider>
 
-    <mat-card style="">
-        <mat-card-title>
-            {{discussion.user.nickname}}
-        </mat-card-title>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                {{discussion.user.nickname}}
+            </mat-card-title>
+            <mat-card-subtitle *ngIf="showLink">
+                <a [routerLink]="['/discuss',discussion.topicId]">源话题</a>
+            </mat-card-subtitle>
+        </mat-card-header>
+
         <mat-card-content>
             {{discussion.text}}
             <img *ngIf="discussion.imageUrl" [src]="discussion.imageUrl" style="max-width: 600px; max-height: 400px;">

@@ -51,8 +51,8 @@
     </mat-tab>
 
     <mat-tab [label]="'热门话题'">
-        <div style="height: calc(70vh); overflow-y: scroll;">
-            <app-topic-list [topics]="hotTopics$|async"></app-topic-list>
+        <div style="height: calc(70vh); overflow-y: scroll;  display: flex; justify-content: center;">
+            <app-topic-list style="width: 80%;" [topics]="hotTopics$|async"></app-topic-list>
         </div>
     </mat-tab>
 </mat-tab-group>
@@ -85,11 +85,13 @@
 
 
     <mat-tab label="话题">
-        <app-topic-list [topics]="topics$|async"></app-topic-list>
+        <div style="height: calc(70vh); overflow-y: scroll;  display: flex; justify-content: center;">
+            <app-topic-list style="width: 70%;" [topics]="topics$|async"></app-topic-list>
+        </div>
     </mat-tab>
 
     <mat-tab label="话题讨论">
-        <app-discussion-list [discussions]="discussions$|async"></app-discussion-list>
+        <app-discussion-list [showLink]="true" [discussions]="discussions$|async"></app-discussion-list>
     </mat-tab>
 
 
