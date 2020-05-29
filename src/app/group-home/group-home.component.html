@@ -22,9 +22,15 @@
 <div *ngFor="let reply of replies$|async">
     <mat-divider></mat-divider>
     <mat-card>
-        <mat-card-title>
-            {{reply.user.nickname}}
-        </mat-card-title>
+        <mat-card-header>
+            <mat-card-title>
+                {{reply.user.nickname}}
+            </mat-card-title>
+            <mat-card-subtitle>
+                <a [routerLink]="['/post-view',reply.postId]" style="text-decoration: none;">来源帖子</a>
+            </mat-card-subtitle>
+        </mat-card-header>
+
         <mat-card-content>
             {{reply.text}}
         </mat-card-content>
