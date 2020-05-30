@@ -1,6 +1,6 @@
 <div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
     <mat-card *ngFor="let work of works" style="margin: 0.2rem; margin-bottom: 0.8rem; border-radius:2rem; width: 180px;">
-        <img mat-card-image src="/blob/example-cover.jpg">
+        <img mat-card-image [src]="work.coverUrl">
         <mat-card-header>
             <mat-card-title>
                 <a style="text-decoration: none;" [routerLink]="['/work',work.id]"> {{work.name}} </a>

@@ -3,11 +3,16 @@
     <h1>
         {{work.name}} <small>{{work.author}}</small>
     </h1>
+
     <h2>
         <mat-icon *ngIf="work.type=='Book'">menu_book</mat-icon>
         <mat-icon *ngIf="work.type=='Film'">videocam</mat-icon>
         {{work.type|workType}}
     </h2>
+
+    <img [src]="work.coverUrl" style="width: 250px;">
+
+
     <h2>简介</h2>
     <p>{{work.description}}</p>
 </div>

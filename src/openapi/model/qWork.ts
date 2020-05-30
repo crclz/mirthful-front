@@ -27,6 +27,7 @@ export interface QWork {
      */
     description?: string | null;
     type?: WorkType;
+    coverUrl?: string | null;
     commentCount?: number;
 }
 
