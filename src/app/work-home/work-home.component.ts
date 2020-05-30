@@ -18,6 +18,8 @@ export class WorkHomeComponent implements OnInit {
 
   works$: Observable<QWork[]>;
 
+  hotWorks$: Observable<QWork[]>;
+
   constructor(
     private route: ActivatedRoute,
     private workApi: WorkService,
@@ -33,6 +35,11 @@ export class WorkHomeComponent implements OnInit {
     this.works$ = this.keyword$.pipe(
       withLatestFrom(this.workType$),
       switchMap(([word, workType]) => this.workApi.getWorkByKeyword(workType, word, 0)),
+      shareReplay(1)
+    );
+
+    this.hotWorks$ = this.workType$.pipe(
+      switchMap(type => this.workApi.hotestWorks(type)),
       shareReplay(1)
     );
   }

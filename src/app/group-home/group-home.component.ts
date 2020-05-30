@@ -19,6 +19,7 @@ export class GroupHomeComponent implements OnInit {
   posts$: Observable<QPost[]>;
   replies$: Observable<QReply[]>;
 
+  hotgroups$: Observable<QTopic[]>;
 
   constructor(
     private topicApi: TopicService

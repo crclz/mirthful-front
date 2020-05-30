@@ -1,3 +1,7 @@
+<h1>小组功能主页</h1>
+<mat-divider style="margin: 2.5rem 0 2.5rem;"></mat-divider>
+<h1>搜索</h1>
+
 <mat-form-field>
     <input matInput placeholder="关键词" [(ngModel)]="wordModel">
 </mat-form-field>
@@ -5,6 +9,11 @@
 <button mat-raised-button color="accent" (click)="search(wordModel)">搜索</button>
 
 <mat-divider style="margin: 2.5rem 0 2.5rem;"></mat-divider>
+
+<h1>搜索结果</h1>
+
+<mat-divider style="margin: 2.5rem 0 2.5rem;"></mat-divider>
+
 
 <h2>小组</h2>
 <app-topic-list [topics]="topics$|async"></app-topic-list>

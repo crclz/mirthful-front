@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <span>书籍影视交流平台</span>
+    <a mat-button routerLink="/home">书籍影视交流平台</a>
 
     <!-- This fills the remaining space of the current row -->
     <span class="fill-remaining"></span>
@@ -10,7 +10,19 @@
       <a mat-button [routerLink]="['/register']">注册</a>
       <button mat-button (click)="auth.showLoginDialog()">登录</button>
     </ng-container>
-    <span *ngIf="(auth.me$|async) as me">你好，{{me.nickname}} </span>
+
+    <a mat-button [routerLink]="['/work-home']" [queryParams]="{workType:'Book'}">书籍</a>
+    <a mat-button [routerLink]="['/work-home']" [queryParams]="{workType:'Film'}">影视</a>
+
+    <a mat-button routerLink="/discuss-home">话题</a>
+    <a mat-button routerLink="/group-home">小组</a>
+
+    <a mat-button routerLink="/create-topic">创建话题/小组</a>
+
+
+    <ng-container *ngIf="(auth.me$|async) as me">
+      <span>你好，{{me.nickname}} </span>
+    </ng-container>
   </mat-toolbar-row>
 
 </mat-toolbar>

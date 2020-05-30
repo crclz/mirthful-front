@@ -1,10 +1,20 @@
 <h1> {{workType$|async|workType}}功能主页 </h1>
 
+<h1>热门</h1>
+<div style="height: calc(70vh); overflow-y: scroll;">
+    <app-work-list [works]="hotWorks$|async"></app-work-list>
+</div>
+
+<mat-divider style="margin: 2.5rem 0 2.5rem;"></mat-divider>
+
+<h1>搜索</h1>
+
 <mat-form-field>
     <input matInput placeholder="关键词" [(ngModel)]="wordInput">
 </mat-form-field>
 
 <button mat-raised-button color="accent" (click)="goSearch(wordInput)">搜索</button>
+
 
 <h2>搜索结果</h2>
 <app-work-list [works]="works$|async">

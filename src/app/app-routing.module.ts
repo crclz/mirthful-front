@@ -17,6 +17,7 @@ import { WorkHomeComponent } from './work-home/work-home.component';
 
 
 const routes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'comment/:workId', component: CommentComponent },// not
   { path: 'register', component: RegisterComponent },

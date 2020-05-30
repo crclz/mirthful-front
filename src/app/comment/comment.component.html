@@ -8,6 +8,9 @@
         <button mat-raised-button color="accent" type="submit" [disabled]="commentForm.invalid">发送</button>
     </form>
 </div>
+<p *ngIf="(this.auth.me$ | async)==null">
+    需要登录才能发表评论
+</p>
 
 <mat-divider style="margin:0.5rem 0 2.5rem"></mat-divider>
 
