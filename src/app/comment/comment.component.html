@@ -27,12 +27,17 @@
     <mat-divider></mat-divider>
 
     <mat-card style="_margin-top: 0.2rem; _border-radius:2rem; border-color: slategray; padding-bottom: 0;">
-        <mat-card-title>
-            {{comment.user.nickname}}
-            <ng-container *ngFor="let k of genlist(comment.rating)">
-                <mat-icon color="accent">star</mat-icon>
-            </ng-container>
-        </mat-card-title>
+        <mat-card-header>
+            <mat-card-title>
+                {{comment.title}}
+                <ng-container *ngFor="let k of genlist(comment.rating)">
+                    <mat-icon color="accent">star</mat-icon>
+                </ng-container>
+            </mat-card-title>
+            <mat-card-subtitle>
+                @{{comment.user.nickname}}
+            </mat-card-subtitle>
+        </mat-card-header>
         <mat-card-content>
             {{comment.text}}
 

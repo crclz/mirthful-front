@@ -23,12 +23,16 @@
                 <mat-card style="margin: 0.2rem; margin-bottom: 0.8rem; border-radius:2rem; width: 600px;">
                     <mat-card-header>
                         <mat-card-title>
-                            作品：
+                            {{comment.title}}
+
+
+                        </mat-card-title>
+                        <mat-card-subtitle>
+                            @{{comment.user.nickname}} |
                             <a style="text-decoration: none;" [routerLink]="['/work',comment.work.id]">
                                 {{comment.work.name}} </a>
 
-                        </mat-card-title>
-                        <mat-card-subtitle> 评论者：{{comment.user.nickname}} </mat-card-subtitle>
+                        </mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content>
                         <!-- Rating Stars -->
