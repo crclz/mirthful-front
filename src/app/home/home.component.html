@@ -69,11 +69,13 @@
 
 <h1>搜索</h1>
 
-<mat-form-field>
-    <input matInput placeholder="关键词" [(ngModel)]="wordInput">
-</mat-form-field>
+<form (submit)="goSearch(keywordInput.value)">
+    <mat-form-field style="margin-right: 2rem;">
+        <input matInput placeholder="关键词" #keywordInput>
+    </mat-form-field>
 
-<button mat-raised-button color="accent" (click)="goSearch(wordInput)">搜索</button>
+    <button type="submit" mat-raised-button color="accent">搜索</button>
+</form>
 
 <h2>搜索结果</h2>
 
