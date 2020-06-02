@@ -18,6 +18,8 @@ export class DiscussionHomeComponent implements OnInit {
 
   topics$: Observable<QTopic[]>;
 
+  hotTopics$: Observable<QTopic[]>;
+
   constructor(
     private topicApi: TopicService
   ) { }
@@ -34,6 +36,8 @@ export class DiscussionHomeComponent implements OnInit {
       switchMap(word => this.topicApi.searchTopics(word, false, 0)),
       shareReplay(1)
     )
+
+    this.hotTopics$ = this.topicApi.hotestTopicsNotGroup().pipe(shareReplay(1));
   }
 
   search(keyWord: string) {

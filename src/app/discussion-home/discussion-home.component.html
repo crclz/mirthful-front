@@ -1,8 +1,7 @@
 <h1>话题功能主页</h1>
+
 <mat-divider style="margin: 2.5rem 0 2.5rem;"></mat-divider>
 <h1>搜索</h1>
-
-
 <form (submit)="search(keywordInput.value)">
     <mat-form-field style="margin-right: 2rem;">
         <input matInput placeholder="关键词" #keywordInput>
@@ -24,3 +23,9 @@
 
 <h2>话题内容</h2>
 <app-discussion-list [showLink]="true" [discussions]="discussions$|async"></app-discussion-list>
+
+
+<mat-divider style="margin: 2.5rem 0 8rem;"></mat-divider>
+
+<h1>热门话题</h1>
+<app-topic-list style="width: 80%;" [topics]="hotTopics$|async"></app-topic-list>

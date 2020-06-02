@@ -47,3 +47,8 @@
         </mat-card-content>
     </mat-card>
 </div>
+
+<mat-divider style="margin: 2.5rem 0 10rem;"></mat-divider>
+
+<h1>热门小组</h1>
+<app-topic-list style="width: 80%;" [topics]="hotGroups$|async"></app-topic-list>

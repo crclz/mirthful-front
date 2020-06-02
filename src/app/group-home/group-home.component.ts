@@ -19,7 +19,7 @@ export class GroupHomeComponent implements OnInit {
   posts$: Observable<QPost[]>;
   replies$: Observable<QReply[]>;
 
-  hotgroups$: Observable<QTopic[]>;
+  hotGroups$: Observable<QTopic[]>;
 
   constructor(
     private topicApi: TopicService
@@ -43,6 +43,8 @@ export class GroupHomeComponent implements OnInit {
       switchMap(word => this.topicApi.searchReplies(word, 0)),
       shareReplay(1)
     )
+
+    this.hotGroups$ = this.topicApi.hotestGroups().pipe(shareReplay(1));
   }
 
   search(keyWord: string) {
