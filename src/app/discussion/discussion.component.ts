@@ -60,32 +60,40 @@ export class DiscussionComponent implements OnInit {
     this.discussForm = this.fb.group({ text: '' });
   }
 
+  imgModel: string;
+
   onFileChange(event) {
     let imageInput = (event.target as HTMLInputElement);
     this.image = imageInput.files.length == 0 ? null : imageInput.files[0];
   }
 
+  resetImage() {
+    this.imgModel = null;
+    this.image = null;
+  }
+
   sendPost(data) {
+    let image = this.image;
+    this.discussForm.reset();
+    this.resetImage();
     console.log(data)
     let text = data.text;
     text = text == null ? '' : text;
     text = text.trim();
 
-    if (text == '' && this.image == null) {
+    if (text == '' && image == null) {
       this.noti.push("不能发送空的讨论")
       return;
     }
 
-
-
     // TODO: How to catch error?
     let a$;
 
-    if (this.image != null) {
+    if (image != null) {
       let fd = new FormData();
-      fd.append('image', this.image)
+      fd.append('image', image)
 
-      a$ = this.topicApi.uploadFile(this.image).pipe(
+      a$ = this.topicApi.uploadFile(image).pipe(
         withLatestFrom(this.topicId$),
         switchMap(([res, topicId]) => this.topicApi.sendDiscussion({ topicId: topicId, text: text, imageUrl: res.url })),
         take(1)
@@ -98,6 +106,7 @@ export class DiscussionComponent implements OnInit {
     }
     a$.subscribe(() => this.noti.ok("发送成功"), p => this.noti.error(p));
     this.discussForm.reset();
+
   }
 
 }

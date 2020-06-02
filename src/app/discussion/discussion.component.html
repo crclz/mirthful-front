@@ -19,8 +19,8 @@
 
 <mat-divider style="margin:2.5rem 0 2.5rem"></mat-divider>
 
-<h1>发送评论</h1>
-<!-- 发送评论 -->
+<h1>发送讨论</h1>
+<!-- 发送讨论 -->
 <form [formGroup]="discussForm">
 
     <div style="display: flex; flex-direction: column;">
@@ -29,8 +29,13 @@
         </mat-form-field>
     </div>
 
-    <input type="file" accept="image/*" (change)="onFileChange($event)">
+    <div style="margin-bottom: 0.5rem;">
+        <mat-label style="margin-right: 2rem;">图片</mat-label>
+        <input type="file" accept="image/*" (change)="onFileChange($event)" [(ngModel)]="imgModel"
+            [ngModelOptions]="{standalone: true}">
+    </div>
 
-    <button mat-flat-button color="primary" (click)="sendPost(discussForm.value)">发送</button>
-
+    <div>
+        <button mat-flat-button color="primary" (click)="sendPost(discussForm.value)">发送</button>
+    </div>
 </form>
