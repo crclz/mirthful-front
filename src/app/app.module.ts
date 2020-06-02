@@ -45,6 +45,7 @@ import { OrderTypePipe } from './order-type.pipe';
 import { WorkTypePipe } from './work-type.pipe';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatDividerModule,
     MatPaginatorModule,
     MatAutocompleteModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatSliderModule
   ],
   providers: [{ provide: BASE_PATH, useValue: '' }],
   bootstrap: [AppComponent]

@@ -4,13 +4,14 @@ import { ActivatedRoute } from '@angular/router';
 import { map, switchMap, shareReplay, take, filter, tap, startWith, debounce, debounceTime } from 'rxjs/operators';
 import { Observable, combineLatest, Subject, ReplaySubject, of, BehaviorSubject } from 'rxjs';
 import { QWork } from 'src/openapi/model/qWork';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators as V } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { NotificationService } from '../notification.service';
 import { AuthenticationService } from '../authentication.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
 import { PageEvent } from '@angular/material/paginator';
+import { ModelHintService } from '../model-hint.service';
 
 @Component({
   selector: 'app-comment',
@@ -48,7 +49,9 @@ export class CommentComponent implements OnInit {
     private commentApi: CommentsService,
     private noti: NotificationService,
     public auth: AuthenticationService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private fb: FormBuilder,
+    public hinter: ModelHintService
   ) {
   }
 
@@ -69,6 +72,12 @@ export class CommentComponent implements OnInit {
       switchMap(([workId, order, pageNumber]) => this.commentApi.getByWork(workId, order, pageNumber)),
       shareReplay(1)
     )
+
+    this.commentForm = this.fb.group({
+      rating: '',
+      title: ['', [V.required, V.minLength(1), V.maxLength(12)]],
+      text: ['', [V.required, V.minLength(25), V.maxLength(800)]]
+    })
   }
 
   genlist(k: number) {
@@ -80,58 +89,22 @@ export class CommentComponent implements OnInit {
   }
 
   // comment form
-  commentForm = new FormGroup({});
-  commemtModel: CreateCommentModel = {
-    workId: '',
-    title: '',
-    text: '',
-    rating: 5,
+  commentForm: FormGroup;
+
+  rawValue(x: number) {
+    return x;
   }
 
-  commentFields: FormlyFieldConfig[] = [
-    {
-      key: 'rating',
-      type: 'input',
-      templateOptions: {
-        label: '评分',
-        type: 'number',
-        step: 1,
-        min: 1,
-        max: 5,
-        required: true
-      }
-    }, {
-      key: 'title',
-      type: 'input',
-      templateOptions: {
-        label: '标题',
-        minLength: 1,
-        maxLength: 12,
-        required: true
-      }
-    }, {
-      key: 'text',
-      type: 'input',
-      templateOptions: {
-        label: '正文',
-        minLength: 25,
-        maxLength: 800,
-        required: true
-      }
-    }
-  ];
-
-  createComment() {
+  createComment(data) {
     this.workId$.pipe(
       switchMap(workId => this.commentApi.createComment({
         workId: workId,
-        title: this.commemtModel.title,
-        text: this.commemtModel.text,
-        rating: this.commemtModel.rating
+        title: data.title,
+        text: data.text,
+        rating: data.rating
       }))
     ).subscribe(() => {
-      this.commemtModel.title = '';
-      this.commemtModel.text = '';
+      this.commentForm.reset();
       this.noti.ok("评论成功！")
     }, p => this.noti.error(p))
   }

@@ -3,9 +3,27 @@
 <!-- User leave comment -->
 <h2>发表评论</h2>
 <div *ngIf="this.auth.me$ | async">
-    <form [formGroup]="commentForm" (ngSubmit)="createComment()">
-        <formly-form [form]="commentForm" [fields]="commentFields" [model]="commemtModel"></formly-form>
-        <button mat-raised-button color="accent" type="submit" [disabled]="commentForm.invalid">发送</button>
+    <form [formGroup]="commentForm" (ngSubmit)="createComment(commentForm.value)">
+        <div>
+            <mat-label style="margin-right: 2rem;">评分</mat-label>
+            <mat-slider thumbLabel [displayWith]="rawValue" [step]="1" min="1" max="5" formControlName="rating">
+            </mat-slider>
+        </div>
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="评论标题" autocomplete="off" formControlName="title">
+                <mat-error> {{ hinter.hint(commentForm.get('title')) }} </mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field style="width: 500px;">
+                <textarea matInput rows="6" placeholder="评论正文" formControlName="text"  ></textarea>
+                <mat-error> {{ hinter.hint(commentForm.get('text')) }} </mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <button mat-raised-button color="accent" type="submit" [disabled]="commentForm.invalid">发送</button>
+        </div>
     </form>
 </div>
 <p *ngIf="(this.auth.me$ | async)==null">
