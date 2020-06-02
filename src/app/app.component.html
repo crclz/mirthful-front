@@ -21,6 +21,8 @@
 
 
     <ng-container *ngIf="(auth.me$|async) as me">
+      <button mat-button (click)="auth.logout()">登出</button>
+
       <span>你好，{{me.nickname}} </span>
     </ng-container>
   </mat-toolbar-row>

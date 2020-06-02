@@ -7,7 +7,7 @@ import { AuthenticationService } from './authentication.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'Front';
+  title = '书籍影视交流系统';
 
   constructor(
     public auth: AuthenticationService
@@ -16,6 +16,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+  }
+
+  logout(){
 
   }
 }

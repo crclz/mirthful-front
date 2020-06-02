@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
       templateOptions: {
         type: 'password',
         label: '密码',
-        minLength: 6,
+        minLength: 8,
         maxLength: 32,
         required: true
       }
