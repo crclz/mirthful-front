@@ -24,3 +24,15 @@
 <!-- Work's comment area -->
 <app-comment [workId$]=" workId$">
 </app-comment>
+
+<mat-divider style="margin: 2.5rem 0 8rem;"></mat-divider>
+
+<!-- Related topics -->
+<h1>相关话题</h1>
+<app-topic-list [topics]="relatedTopics$|async"></app-topic-list>
+
+<mat-divider style="margin: 2.5rem 0 3rem;"></mat-divider>
+
+
+<h1>相关小组</h1>
+<app-topic-list [topics]="relatedGroups$|async"></app-topic-list>
