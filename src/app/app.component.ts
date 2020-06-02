@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './authentication.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -10,16 +11,17 @@ export class AppComponent implements OnInit {
   title = '书籍影视交流系统';
 
   constructor(
-    public auth: AuthenticationService
+    public auth: AuthenticationService,
+    private titleService: Title
   ) {
 
   }
 
   ngOnInit(): void {
-
+    this.titleService.setTitle(this.title);
   }
 
-  logout(){
+  logout() {
 
   }
 }
