@@ -9,4 +9,4 @@ cp DOCKERFILE temp_docker_build/
 
 cd temp_docker_build
 
-docker build . -t mirthful-front:latest
+docker build . -t registry.cn-beijing.aliyuncs.com/crucialize/mirthful-front:latest
