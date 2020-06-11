@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject, combineLatest } from 'rxjs';
+import { Observable, Subject, combineLatest, of } from 'rxjs';
 import { WorkType, WorkService, QWork } from 'src/openapi';
 import { ActivatedRoute } from '@angular/router';
 import { map, shareReplay, withLatestFrom, switchMap } from 'rxjs/operators';
@@ -32,9 +32,16 @@ export class WorkHomeComponent implements OnInit {
       shareReplay(1)
     );
 
+    // route changed, reset some state
+    this.workType$.subscribe(t => {
+      this.keyword$.next('');
+      this.wordInput = '';
+    });
+
     this.works$ = this.keyword$.pipe(
+      map(word => word.trim()),
       withLatestFrom(this.workType$),
-      switchMap(([word, workType]) => this.workApi.getWorkByKeyword(workType, word, 0)),
+      switchMap(([word, workType]) => word == "" ? of([]) : this.workApi.getWorkByKeyword(workType, word, 0)),
       shareReplay(1)
     );
 
